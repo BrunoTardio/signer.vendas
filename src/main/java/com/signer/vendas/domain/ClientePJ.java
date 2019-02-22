@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ClientePJ implements Serializable {
@@ -19,13 +23,19 @@ public class ClientePJ implements Serializable {
 	public String cnpj;
 	public String inscricaoEstadual;
 	public String tributacao;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="cliente_id")
+	private Cliente cliente;
+	
 
 	public ClientePJ() {
 
 	}
 
 	public ClientePJ(Integer id, String nomeEmpresa, String nomeFantasia, String cnpj, String inscricaoEstadual,
-			String tributacao) {
+			String tributacao, Cliente cliente) {
 		super();
 		this.id = id;
 		this.nomeEmpresa = nomeEmpresa;
@@ -33,6 +43,7 @@ public class ClientePJ implements Serializable {
 		this.cnpj = cnpj;
 		this.inscricaoEstadual = inscricaoEstadual;
 		this.tributacao = tributacao;
+		this.cliente = cliente;
 	}
 
 	public Integer getId() {
@@ -81,6 +92,14 @@ public class ClientePJ implements Serializable {
 
 	public void setTributacao(String tributacao) {
 		this.tributacao = tributacao;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	@Override

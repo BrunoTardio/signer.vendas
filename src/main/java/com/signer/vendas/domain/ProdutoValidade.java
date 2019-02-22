@@ -1,6 +1,8 @@
 package com.signer.vendas.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,8 +15,10 @@ public class ProdutoValidade implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer id;
-	public Integer validade;
+	private Integer id;
+	private Integer validade;
+	
+	
 
 	public ProdutoValidade() {
 

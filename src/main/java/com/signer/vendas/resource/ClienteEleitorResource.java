@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.signer.vendas.domain.ClienteEleitor;
 import com.signer.vendas.service.ClienteEleitorService;
 
+import javassist.tools.rmi.ObjectNotFoundException;
+
 @RestController
 @RequestMapping(value="/clienteeleitores")
 public class ClienteEleitorResource {
@@ -19,7 +21,7 @@ public class ClienteEleitorResource {
 	private ClienteEleitorService service;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id){
+	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException{
 		
 		ClienteEleitor obj = service.find(id);
 		return ResponseEntity.ok().body(obj);	
