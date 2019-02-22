@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,8 +25,11 @@ public class Cliente implements Serializable {
 	private String senha;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="cliente")
 	private List<ClientePJ> clientesPJ = new ArrayList<>();
+	
+	@OneToOne(mappedBy="cliente")
+	private ClientePF clientePF;
 
 	public Cliente() {
 
@@ -68,6 +73,14 @@ public class Cliente implements Serializable {
 
 	public void setClientesPJ(List<ClientePJ> clientesPJ) {
 		this.clientesPJ = clientesPJ;
+	}
+
+	public ClientePF getClientePF() {
+		return clientePF;
+	}
+
+	public void setClientePF(ClientePF clientePF) {
+		this.clientePF = clientePF;
 	}
 
 	@Override

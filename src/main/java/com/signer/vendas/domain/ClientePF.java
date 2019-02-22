@@ -3,10 +3,14 @@ package com.signer.vendas.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ClientePF implements Serializable {
@@ -17,15 +21,21 @@ public class ClientePF implements Serializable {
 	private Integer id;
 	private String nome;
 	private String cpf;
-	private Date nascimento;
+	private String nascimento;
 	private String cei;
 	private String pis;
+	
+
+	@OneToOne
+	@JoinColumn(name="cliente_id")
+	//@MapsId
+	Cliente cliente;
 
 	public ClientePF() {
 
 	}
 
-	public ClientePF(Integer id, String nome, String cpf, Date nascimento, String cei, String pis) {
+	public ClientePF(Integer id, String nome, String cpf, String nascimento, String cei, String pis,Cliente cliente) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -33,6 +43,7 @@ public class ClientePF implements Serializable {
 		this.nascimento = nascimento;
 		this.cei = cei;
 		this.pis = pis;
+		this.cliente = cliente;
 	}
 
 	public Integer getId() {
@@ -59,11 +70,11 @@ public class ClientePF implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public Date getNascimento() {
+	public String getNascimento() {
 		return nascimento;
 	}
 
-	public void setNascimento(Date nascimento) {
+	public void setNascimento(String nascimento) {
 		this.nascimento = nascimento;
 	}
 
@@ -81,6 +92,14 @@ public class ClientePF implements Serializable {
 
 	public void setPis(String pis) {
 		this.pis = pis;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	@Override
