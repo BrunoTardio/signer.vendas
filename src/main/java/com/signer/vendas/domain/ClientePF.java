@@ -48,6 +48,17 @@ public class ClientePF implements Serializable {
 	
 	@OneToOne(cascade=CascadeType.ALL,mappedBy="clientePF")
 	private ClienteEleitor clienteEleitor;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="clientePF")
+	private List<Pedido> pedidos = new ArrayList<>();
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
 	public ClientePF() {
 

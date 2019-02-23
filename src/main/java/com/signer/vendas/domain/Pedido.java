@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pedido implements Serializable {
@@ -15,15 +20,21 @@ public class Pedido implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer id;
 	public double valor;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="Cliente_pf")
+	private ClientePF clientePF;
 
 	public Pedido() {
 
 	}
 
-	public Pedido(Integer id, double valor) {
+	public Pedido(Integer id, double valor, ClientePF clientepf) {
 		super();
 		this.id = id;
 		this.valor = valor;
+		this.clientePF = clientepf;
 	}
 
 	public Integer getId() {
@@ -40,6 +51,14 @@ public class Pedido implements Serializable {
 
 	public void setValor(double valor) {
 		this.valor = valor;
+	}
+
+	public ClientePF getClientePF() {
+		return clientePF;
+	}
+
+	public void setClientePF(ClientePF clientePF) {
+		this.clientePF = clientePF;
 	}
 
 	@Override
