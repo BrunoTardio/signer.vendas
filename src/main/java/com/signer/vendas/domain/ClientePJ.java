@@ -1,13 +1,17 @@
 package com.signer.vendas.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -17,18 +21,20 @@ public class ClientePJ implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer id;
-	public String nomeEmpresa;
-	public String nomeFantasia;
-	public String cnpj;
-	public String inscricaoEstadual;
-	public String tributacao;
+	private Integer id;
+	private String nomeEmpresa;
+	private String nomeFantasia;
+	private String cnpj;
+	private String inscricaoEstadual;
+	private String tributacao;
 	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="clientePJ")
+	private List<ClienteEndereco> clienteEnderecos = new ArrayList<>();
 
 	public ClientePJ() {
 
@@ -100,6 +106,14 @@ public class ClientePJ implements Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public List<ClienteEndereco> getClienteEnderecos() {
+		return clienteEnderecos;
+	}
+
+	public void setClienteEnderecos(List<ClienteEndereco> clienteEnderecos) {
+		this.clienteEnderecos = clienteEnderecos;
 	}
 
 	@Override

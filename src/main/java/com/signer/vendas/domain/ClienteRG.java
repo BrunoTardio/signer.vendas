@@ -101,6 +101,14 @@ public class ClienteRG implements Serializable {
 		this.nomeDaMae = nomeDaMae;
 	}
 
+	public ClientePF getClientepf() {
+		return clientepf;
+	}
+
+	public void setClientepf(ClientePF clientepf) {
+		this.clientepf = clientepf;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

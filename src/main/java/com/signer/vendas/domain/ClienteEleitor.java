@@ -24,7 +24,7 @@ public class ClienteEleitor implements Serializable {
 	
 	@OneToOne
 	@JoinColumn(name="cliente_pf")
-	ClientePF clientePF;
+	private ClientePF clientePF;
 
 	public ClienteEleitor() {
 
@@ -87,6 +87,14 @@ public class ClienteEleitor implements Serializable {
 
 	public void setUf(String uf) {
 		this.uf = uf;
+	}
+
+	public ClientePF getClientePF() {
+		return clientePF;
+	}
+
+	public void setClientePF(ClientePF clientePF) {
+		this.clientePF = clientePF;
 	}
 
 	@Override

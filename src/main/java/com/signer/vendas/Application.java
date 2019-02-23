@@ -15,11 +15,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.signer.vendas.domain.Cliente;
 import com.signer.vendas.domain.ClienteEleitor;
+import com.signer.vendas.domain.ClienteEndereco;
 import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.ClientePJ;
 import com.signer.vendas.domain.ClienteRG;
 import com.signer.vendas.domain.ProdutoCategoria;
 import com.signer.vendas.repository.ClienteEleitorRepository;
+import com.signer.vendas.repository.ClienteEnderecoRepository;
 import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClientePJRepository;
 import com.signer.vendas.repository.ClienteRGRepository;
@@ -50,6 +52,9 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	ClienteEleitorRepository cerepo;
+	
+	@Autowired
+	ClienteEnderecoRepository cendrepo;
 	
 
 	public static void main(String[] args) {
@@ -96,6 +101,10 @@ public class Application implements CommandLineRunner {
 		
 		ClienteEleitor ce1 = new ClienteEleitor(null, "300", "jardim", "153","juiz de fora", "mg", cpf1);
 		cerepo.save(ce1);
+		
+		ClienteEndereco cend1 = new ClienteEndereco(null, "Rua guilardo", "200", "Casa", "Milho branco", "360000", "Juiz de fora", "mg", cpf1, cpj1);
+		ClienteEndereco cend2 = new ClienteEndereco(null, "Eulices", "200", "ap 01", "Milho preto", "360000", "Juiz de fora", "mg", null, cpj2);
+		cendrepo.saveAll(Arrays.asList(cend1,cend2));
 
 	}
 

@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ClienteEndereco implements Serializable {
@@ -21,13 +25,22 @@ public class ClienteEndereco implements Serializable {
 	private String cep;
 	private String cidade;
 	private String uf;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="cliente_pf")
+	private ClientePF clientePF;
+	
+	@ManyToOne
+	@JoinColumn(name="cliente_pj")
+	private ClientePJ clientePJ;
 
 	public ClienteEndereco() {
 
 	}
 
 	public ClienteEndereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
-			String cidade, String uf) {
+			String cidade, String uf, ClientePF clientePF, ClientePJ clientePJ) {
 		super();
 		this.id = id;
 		this.logradouro = logradouro;
@@ -37,6 +50,8 @@ public class ClienteEndereco implements Serializable {
 		this.cep = cep;
 		this.cidade = cidade;
 		this.uf = uf;
+		this.clientePF = clientePF;
+		this.clientePJ = clientePJ;
 	}
 
 	public Integer getId() {
@@ -101,6 +116,14 @@ public class ClienteEndereco implements Serializable {
 
 	public void setUf(String uf) {
 		this.uf = uf;
+	}
+
+	public ClientePF getClientePF() {
+		return clientePF;
+	}
+
+	public void setClientePF(ClientePF clientePF) {
+		this.clientePF = clientePF;
 	}
 
 	@Override

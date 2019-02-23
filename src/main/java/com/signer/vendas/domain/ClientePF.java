@@ -1,8 +1,9 @@
 package com.signer.vendas.domain;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -31,18 +33,21 @@ public class ClientePF implements Serializable {
 
 	@ElementCollection
 	@CollectionTable(name="ClienteRGTeste")
-	Set<ClienteRG> clienteRG = new HashSet<>();
+	private Set<ClienteRG> clienteRG = new HashSet<>();
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="clientePF")
+	private List<ClienteEndereco> clienteEnderecos = new ArrayList<>();
 	
 	@OneToOne
 	@JoinColumn(name="cliente_id")
 	//@MapsId
-	Cliente cliente;
+	private Cliente cliente;
 
 	@OneToOne(cascade=CascadeType.ALL,mappedBy="clientepf")
-	ClienteRG clienterg;
+	private ClienteRG clienterg;
 	
 	@OneToOne(cascade=CascadeType.ALL,mappedBy="clientePF")
-	ClienteEleitor clienteEleitor;
+	private ClienteEleitor clienteEleitor;
 
 	public ClientePF() {
 
@@ -137,6 +142,14 @@ public class ClientePF implements Serializable {
 
 	public void setClienteEleitor(ClienteEleitor clienteEleitor) {
 		this.clienteEleitor = clienteEleitor;
+	}
+
+	public List<ClienteEndereco> getClienteEnderecos() {
+		return clienteEnderecos;
+	}
+
+	public void setClienteEnderecos(List<ClienteEndereco> clienteEnderecos) {
+		this.clienteEnderecos = clienteEnderecos;
 	}
 
 	@Override
