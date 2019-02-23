@@ -35,7 +35,10 @@ public class ClientePJ implements Serializable {
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="clientePJ")
 	private List<ClienteEndereco> clienteEnderecos = new ArrayList<>();
-
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="clientePJ")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
 	public ClientePJ() {
 
 	}
@@ -114,6 +117,14 @@ public class ClientePJ implements Serializable {
 
 	public void setClienteEnderecos(List<ClienteEndereco> clienteEnderecos) {
 		this.clienteEnderecos = clienteEnderecos;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override

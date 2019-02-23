@@ -25,16 +25,22 @@ public class Pedido implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="Cliente_pf")
 	private ClientePF clientePF;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="Cliente_pj")
+	private ClientePJ clientePJ;
 
 	public Pedido() {
 
 	}
 
-	public Pedido(Integer id, double valor, ClientePF clientepf) {
+	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj) {
 		super();
 		this.id = id;
 		this.valor = valor;
 		this.clientePF = clientepf;
+		this.clientePJ = clientepj;
 	}
 
 	public Integer getId() {

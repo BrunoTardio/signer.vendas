@@ -113,10 +113,12 @@ public class Application implements CommandLineRunner {
 		
 		////////////////////////////////////////////////
 		
-		Pedido p1 = new Pedido(null, 55, cpf1);
-		Pedido p2 = new Pedido(null, 55, cpf2);
-		Pedido p3 = new Pedido(null, 55, cpf3);
-		prepo.saveAll(Arrays.asList(p1,p2,p3));
+		Pedido p1 = new Pedido(null, 55, cpf1,null);
+		Pedido p2 = new Pedido(null, 55, cpf2,null);
+		Pedido p3 = new Pedido(null, 55, cpf3,null);
+		Pedido p4 = new Pedido(null, 55, null,cpj1);
+		Pedido p5 = new Pedido(null, 55, null,cpj2);
+		prepo.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
 		
 
