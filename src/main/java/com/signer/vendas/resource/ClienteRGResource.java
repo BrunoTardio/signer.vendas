@@ -11,15 +11,16 @@ import com.signer.vendas.domain.ClienteRG;
 import com.signer.vendas.service.ClienteRGService;
 
 @RestController
-@RequestMapping(value = "/clientergs")
+@RequestMapping(value = "clientergs")
 public class ClienteRGResource {
 
 	@Autowired
-	private ClienteRGService service;
+	ClienteRGService service;
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		ClienteRG obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
+
 }

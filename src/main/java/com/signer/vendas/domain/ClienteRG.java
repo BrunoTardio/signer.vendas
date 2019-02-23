@@ -1,12 +1,14 @@
 package com.signer.vendas.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ClienteRG implements Serializable {
@@ -14,20 +16,24 @@ public class ClienteRG implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer id;
-	public String nomeTitular;
-	public String numeroRG;
-	public Date dataExpedicao;
-	public String orgaoExpeditor;
-	public String nomeDoPai;
-	public String nomeDaMae;
+	private Integer id;
+	private String nomeTitular;
+	private String numeroRG;
+	private String dataExpedicao;
+	private String orgaoExpeditor;
+	private String nomeDoPai;
+	private String nomeDaMae;
 
+	@OneToOne
+	@JoinColumn(name="cliente_pf")
+	ClientePF clientepf;
+	
 	public ClienteRG() {
 
 	}
 
-	public ClienteRG(Integer id, String nomeTitular, String numeroRG, Date dataExpedicao, String orgaoExpeditor,
-			String nomeDoPai, String nomeDaMae) {
+	public ClienteRG(Integer id, String nomeTitular, String numeroRG, String dataExpedicao, String orgaoExpeditor,
+			String nomeDoPai, String nomeDaMae, ClientePF clientepf) {
 		super();
 		this.id = id;
 		this.nomeTitular = nomeTitular;
@@ -36,6 +42,7 @@ public class ClienteRG implements Serializable {
 		this.orgaoExpeditor = orgaoExpeditor;
 		this.nomeDoPai = nomeDoPai;
 		this.nomeDaMae = nomeDaMae;
+		this.clientepf = clientepf;
 	}
 
 	public Integer getId() {
@@ -62,11 +69,11 @@ public class ClienteRG implements Serializable {
 		this.numeroRG = numeroRG;
 	}
 
-	public Date getDataExpedicao() {
+	public String getDataExpedicao() {
 		return dataExpedicao;
 	}
 
-	public void setDataExpedicao(Date dataExpedicao) {
+	public void setDataExpedicao(String dataExpedicao) {
 		this.dataExpedicao = dataExpedicao;
 	}
 

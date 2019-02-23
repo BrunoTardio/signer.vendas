@@ -1,15 +1,18 @@
 package com.signer.vendas.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -30,6 +33,13 @@ public class ClientePF implements Serializable {
 	@JoinColumn(name="cliente_id")
 	//@MapsId
 	Cliente cliente;
+	
+	@ElementCollection
+	@CollectionTable(name="ClienteRGTeste")
+	Set<ClienteRG> clienteRG = new HashSet<>();
+	
+	@OneToOne(cascade=CascadeType.ALL,mappedBy="clientepf")
+	ClienteRG clienterg;
 
 	public ClientePF() {
 
@@ -100,6 +110,14 @@ public class ClientePF implements Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Set<ClienteRG> getClienteRG() {
+		return clienteRG;
+	}
+
+	public void setClienteRG(Set<ClienteRG> clienteRG) {
+		this.clienteRG = clienteRG;
 	}
 
 	@Override
