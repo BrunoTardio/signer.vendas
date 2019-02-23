@@ -20,6 +20,7 @@ import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.ClientePJ;
 import com.signer.vendas.domain.ClienteRG;
 import com.signer.vendas.domain.Pedido;
+import com.signer.vendas.domain.PedidoAgenda;
 import com.signer.vendas.domain.ProdutoCategoria;
 import com.signer.vendas.repository.ClienteEleitorRepository;
 import com.signer.vendas.repository.ClienteEnderecoRepository;
@@ -27,6 +28,7 @@ import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClientePJRepository;
 import com.signer.vendas.repository.ClienteRGRepository;
 import com.signer.vendas.repository.ClienteRepository;
+import com.signer.vendas.repository.PedidoAgendaRepository;
 import com.signer.vendas.repository.PedidoRepository;
 import com.signer.vendas.repository.ProdutoCategoriaRepository;
 import com.signer.vendas.service.ClienteService;
@@ -60,6 +62,10 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	PedidoRepository prepo;
+	
+	@Autowired
+	PedidoAgendaRepository parepo;
+	
 	
 
 	public static void main(String[] args) {
@@ -113,11 +119,14 @@ public class Application implements CommandLineRunner {
 		
 		////////////////////////////////////////////////
 		
-		Pedido p1 = new Pedido(null, 55, cpf1,null);
-		Pedido p2 = new Pedido(null, 55, cpf2,null);
-		Pedido p3 = new Pedido(null, 55, cpf3,null);
-		Pedido p4 = new Pedido(null, 55, null,cpj1);
-		Pedido p5 = new Pedido(null, 55, null,cpj2);
+		PedidoAgenda pa1 = new PedidoAgenda(null, "30/02/18",2);
+		parepo.save(pa1);
+		
+		Pedido p1 = new Pedido(null, 55, cpf1,null,pa1);
+		Pedido p2 = new Pedido(null, 55, cpf2,null,pa1);
+		Pedido p3 = new Pedido(null, 55, cpf3,null,pa1);
+		Pedido p4 = new Pedido(null, 55, null,cpj1,pa1);
+		Pedido p5 = new Pedido(null, 55, null,cpj2,pa1);
 		prepo.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
 		

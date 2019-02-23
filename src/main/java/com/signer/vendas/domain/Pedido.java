@@ -30,17 +30,23 @@ public class Pedido implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="Cliente_pj")
 	private ClientePJ clientePJ;
-
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="pedido_agenda")
+	private PedidoAgenda pedidoAgenda;
+	
 	public Pedido() {
 
 	}
 
-	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj) {
+	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj, PedidoAgenda pedidoAgenda) {
 		super();
 		this.id = id;
 		this.valor = valor;
 		this.clientePF = clientepf;
 		this.clientePJ = clientepj;
+		this.pedidoAgenda = pedidoAgenda;
 	}
 
 	public Integer getId() {
@@ -65,6 +71,22 @@ public class Pedido implements Serializable {
 
 	public void setClientePF(ClientePF clientePF) {
 		this.clientePF = clientePF;
+	}
+
+	public ClientePJ getClientePJ() {
+		return clientePJ;
+	}
+
+	public void setClientePJ(ClientePJ clientePJ) {
+		this.clientePJ = clientePJ;
+	}
+
+	public PedidoAgenda getPedidoAgenda() {
+		return pedidoAgenda;
+	}
+
+	public void setPedidoAgenda(PedidoAgenda pedidoAgenda) {
+		this.pedidoAgenda = pedidoAgenda;
 	}
 
 	@Override

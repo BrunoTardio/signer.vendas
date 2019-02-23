@@ -1,12 +1,15 @@
 package com.signer.vendas.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class PedidoAgenda implements Serializable {
@@ -15,10 +18,22 @@ public class PedidoAgenda implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private Date data;
+	private String data;
+	private Integer disponibilidade;
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="pedidoAgenda")
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	public PedidoAgenda() {
 
+	}
+
+	public PedidoAgenda(Integer id, String data, Integer disponibilidade) {
+		super();
+		this.id = id;
+		this.data = data;
+		this.disponibilidade = disponibilidade;
+		
 	}
 
 	public Integer getId() {
@@ -29,12 +44,28 @@ public class PedidoAgenda implements Serializable {
 		this.id = id;
 	}
 
-	public Date getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public Integer getDisponibilidade() {
+		return disponibilidade;
+	}
+
+	public void setDisponibilidade(Integer disponibilidade) {
+		this.disponibilidade = disponibilidade;
 	}
 
 	@Override
