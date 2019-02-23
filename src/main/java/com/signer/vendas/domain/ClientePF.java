@@ -29,17 +29,20 @@ public class ClientePF implements Serializable {
 	private String pis;
 	
 
-	@OneToOne
-	@JoinColumn(name="cliente_id")
-	//@MapsId
-	Cliente cliente;
-	
 	@ElementCollection
 	@CollectionTable(name="ClienteRGTeste")
 	Set<ClienteRG> clienteRG = new HashSet<>();
 	
+	@OneToOne
+	@JoinColumn(name="cliente_id")
+	//@MapsId
+	Cliente cliente;
+
 	@OneToOne(cascade=CascadeType.ALL,mappedBy="clientepf")
 	ClienteRG clienterg;
+	
+	@OneToOne(cascade=CascadeType.ALL,mappedBy="clientePF")
+	ClienteEleitor clienteEleitor;
 
 	public ClientePF() {
 
@@ -118,6 +121,22 @@ public class ClientePF implements Serializable {
 
 	public void setClienteRG(Set<ClienteRG> clienteRG) {
 		this.clienteRG = clienteRG;
+	}
+
+	public ClienteRG getClienterg() {
+		return clienterg;
+	}
+
+	public void setClienterg(ClienteRG clienterg) {
+		this.clienterg = clienterg;
+	}
+
+	public ClienteEleitor getClienteEleitor() {
+		return clienteEleitor;
+	}
+
+	public void setClienteEleitor(ClienteEleitor clienteEleitor) {
+		this.clienteEleitor = clienteEleitor;
 	}
 
 	@Override

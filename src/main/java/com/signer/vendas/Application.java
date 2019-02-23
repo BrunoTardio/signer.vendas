@@ -14,10 +14,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.signer.vendas.domain.Cliente;
+import com.signer.vendas.domain.ClienteEleitor;
 import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.ClientePJ;
 import com.signer.vendas.domain.ClienteRG;
 import com.signer.vendas.domain.ProdutoCategoria;
+import com.signer.vendas.repository.ClienteEleitorRepository;
 import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClientePJRepository;
 import com.signer.vendas.repository.ClienteRGRepository;
@@ -46,6 +48,8 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	ClienteRGRepository crgrepo;
 	
+	@Autowired
+	ClienteEleitorRepository cerepo;
 	
 
 	public static void main(String[] args) {
@@ -89,6 +93,9 @@ public class Application implements CommandLineRunner {
 		
 		ClienteRG crg1 = new ClienteRG(null, "Bruno Tardio","0000", "16", "ssp","elias","cristiane", cpf1);
 		crgrepo.save(crg1);
+		
+		ClienteEleitor ce1 = new ClienteEleitor(null, "300", "jardim", "153","juiz de fora", "mg", cpf1);
+		cerepo.save(ce1);
 
 	}
 

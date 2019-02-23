@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ClienteEleitor implements Serializable {
@@ -19,12 +21,16 @@ public class ClienteEleitor implements Serializable {
 	private String zona;
 	private String cidade;
 	private String uf;
+	
+	@OneToOne
+	@JoinColumn(name="cliente_pf")
+	ClientePF clientePF;
 
 	public ClienteEleitor() {
 
 	}
 
-	public ClienteEleitor(Integer id, String numero, String secao, String zona, String cidade, String uf) {
+	public ClienteEleitor(Integer id, String numero, String secao, String zona, String cidade, String uf,ClientePF clientepf) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -32,6 +38,7 @@ public class ClienteEleitor implements Serializable {
 		this.zona = zona;
 		this.cidade = cidade;
 		this.uf = uf;
+		this.clientePF = clientepf;
 	}
 
 	public Integer getId() {
