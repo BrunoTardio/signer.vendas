@@ -2,9 +2,13 @@ package com.signer.vendas.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +34,15 @@ public class Cliente implements Serializable {
 	
 	@OneToOne(mappedBy="cliente")
 	private ClientePF clientePF;
+	
+	@ElementCollection
+	@CollectionTable(name="clienteTelefone")
+	private Set<String> telefones = new HashSet<>();
+
+	@ElementCollection
+	@CollectionTable(name="clienteEmail")
+	private Set<String> emails = new HashSet<>();
+
 
 	public Cliente() {
 
@@ -81,6 +94,22 @@ public class Cliente implements Serializable {
 
 	public void setClientePF(ClientePF clientePF) {
 		this.clientePF = clientePF;
+	}
+
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
+	}
+
+	public Set<String> getEmails() {
+		return emails;
+	}
+
+	public void setEmails(Set<String> emails) {
+		this.emails = emails;
 	}
 
 	@Override

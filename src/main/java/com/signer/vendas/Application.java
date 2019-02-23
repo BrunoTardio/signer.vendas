@@ -1,10 +1,12 @@
 package com.signer.vendas;
 
 
-import java.awt.Window;
+
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -57,6 +59,17 @@ public class Application implements CommandLineRunner {
 		Cliente c3 = new Cliente(null, "fernando@gmail.com", "123");
 		Cliente c4 = new Cliente(null, "gustavo@gmail.com", "123");
 		Cliente c5 = new Cliente(null, "bruno@gmail.com", "123");
+		
+		Set<String> telefones = new HashSet<>();
+		telefones.add("32991612896");
+		telefones.add("32999998888");
+		Set<String> emails = new HashSet<>();
+		emails.add("brunotardio@gmail.com");
+		emails.add("brunotardio89@gmail.com");
+		emails.add("barbosasilverio89@gmail.com");
+		
+		c1.setTelefones(telefones);
+		c1.setEmails(emails);
 
 		crepo.saveAll(Arrays.asList(c1, c2, c3, c4, c5));
 
