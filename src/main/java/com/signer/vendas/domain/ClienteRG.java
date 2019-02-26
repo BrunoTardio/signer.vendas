@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ClienteRG implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -24,6 +26,7 @@ public class ClienteRG implements Serializable {
 	private String nomeDoPai;
 	private String nomeDaMae;
 
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="cliente_pf")
 	ClientePF clientepf;

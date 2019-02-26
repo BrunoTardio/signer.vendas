@@ -17,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ClientePF implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -35,19 +37,23 @@ public class ClientePF implements Serializable {
 	@CollectionTable(name="ClienteRGTeste")
 	private Set<ClienteRG> clienteRG = new HashSet<>();
 	
+
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="clientePF")
 	private List<ClienteEndereco> clienteEnderecos = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="cliente_id")
-	//@MapsId
 	private Cliente cliente;
 
+	// ok
 	@OneToOne(cascade=CascadeType.ALL,mappedBy="clientepf")
 	private ClienteRG clienterg;
 	
+	// ok
 	@OneToOne(cascade=CascadeType.ALL,mappedBy="clientePF")
 	private ClienteEleitor clienteEleitor;
+	
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="clientePF")
 	private List<Pedido> pedidos = new ArrayList<>();

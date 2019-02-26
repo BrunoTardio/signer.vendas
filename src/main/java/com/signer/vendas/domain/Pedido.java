@@ -31,17 +31,17 @@ public class Pedido implements Serializable {
 	@JoinColumn(name="Cliente_pj")
 	private ClientePJ clientePJ;
 	
-	@JsonIgnore
+
 	@ManyToOne
 	@JoinColumn(name="pedido_agenda")
 	private PedidoAgenda pedidoAgenda;
 	
-	@JsonIgnore
+
 	@ManyToOne
 	@JoinColumn(name="pedido_situacao")
 	private PedidoSituacao pedidoSituacao;
 	
-    @JsonIgnore
+    
 	@ManyToOne
 	@JoinColumn(name="produto_id")
 	private Produto produto;

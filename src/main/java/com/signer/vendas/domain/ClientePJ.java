@@ -28,14 +28,16 @@ public class ClientePJ implements Serializable {
 	private String inscricaoEstadual;
 	private String tributacao;
 	
-	@JsonIgnore
+    @JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	
+
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="clientePJ")
 	private List<ClienteEndereco> clienteEnderecos = new ArrayList<>();
 	
+
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="clientePJ")
 	private List<Pedido> pedidos = new ArrayList<>();
 	

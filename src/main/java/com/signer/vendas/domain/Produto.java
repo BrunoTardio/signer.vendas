@@ -27,11 +27,11 @@ public class Produto implements Serializable {
 	private Integer validade;
 	private Double preco;
 	
-	
+	@JsonIgnore
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="produto")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name="produto_categoria_id")
 	private ProdutoCategoria produtoCategoria;

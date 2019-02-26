@@ -16,7 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Cliente implements Serializable {
@@ -28,16 +28,19 @@ public class Cliente implements Serializable {
 	private String login;
 	private String senha;
 	
-	@JsonIgnore
+
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="cliente")
 	private List<ClientePJ> clientesPJ = new ArrayList<>();
 	
+
 	@OneToOne(mappedBy="cliente")
 	private ClientePF clientePF;
 	
+
 	@ElementCollection
 	@CollectionTable(name="clienteTelefone")
 	private Set<String> telefones = new HashSet<>();
+
 
 	@ElementCollection
 	@CollectionTable(name="clienteEmail")

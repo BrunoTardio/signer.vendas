@@ -3,12 +3,12 @@ package com.signer.vendas;
 
 
 
-import java.lang.reflect.Array;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.bind.ParseConversionEvent;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -120,7 +120,7 @@ public class Application implements CommandLineRunner {
 		ClienteEleitor ce1 = new ClienteEleitor(null, "300", "jardim", "153","juiz de fora", "mg", cpf1);
 		cerepo.save(ce1);
 		
-		ClienteEndereco cend1 = new ClienteEndereco(null, "Rua guilardo", "200", "Casa", "Milho branco", "360000", "Juiz de fora", "mg", cpf1, cpj1);
+		ClienteEndereco cend1 = new ClienteEndereco(null, "Rua guilardo", "200", "Casa", "Milho branco", "360000", "Juiz de fora", "mg", cpf1, null);
 		ClienteEndereco cend2 = new ClienteEndereco(null, "Eulices", "200", "ap 01", "Milho preto", "360000", "Juiz de fora", "mg", null, cpj2);
 		cendrepo.saveAll(Arrays.asList(cend1,cend2));
 		

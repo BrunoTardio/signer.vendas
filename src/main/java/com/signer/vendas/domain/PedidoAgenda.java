@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class PedidoAgenda implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,6 +23,7 @@ public class PedidoAgenda implements Serializable {
 	private String data;
 	private Integer disponibilidade;
 	
+	@JsonIgnore
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="pedidoAgenda")
 	private List<Pedido> pedidos = new ArrayList<>();
 

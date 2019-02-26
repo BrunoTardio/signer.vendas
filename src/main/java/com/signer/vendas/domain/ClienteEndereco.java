@@ -31,6 +31,7 @@ public class ClienteEndereco implements Serializable {
 	@JoinColumn(name="cliente_pf")
 	private ClientePF clientePF;
 	
+
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="cliente_pj")
