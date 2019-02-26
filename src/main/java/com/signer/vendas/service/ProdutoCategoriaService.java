@@ -22,6 +22,15 @@ public class ProdutoCategoriaService {
 		return obj.orElse(null);
 
 	}
-	
+
+	public ProdutoCategoria insert(ProdutoCategoria obj) {
+		obj.setId(null);
+		return repo.save(obj);
+	}
+
+	public ProdutoCategoria update(ProdutoCategoria obj) {
+		find(obj.getId()); // chamo no banco apenas para ver se o objeto existe
+		return repo.save(obj);
+	}
 
 }
