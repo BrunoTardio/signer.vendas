@@ -1,11 +1,15 @@
 package com.signer.vendas.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class ProdutoCategoria implements Serializable {
@@ -16,6 +20,9 @@ public class ProdutoCategoria implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="produtoCategoria")
+	private List<Produto> produtos = new ArrayList<>();
 
 	public ProdutoCategoria() {
 
@@ -26,6 +33,7 @@ public class ProdutoCategoria implements Serializable {
 		this.id = id;
 		this.nome = nome;
 	}
+
 
 	public Integer getId() {
 		return id;
@@ -41,6 +49,14 @@ public class ProdutoCategoria implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 	@Override

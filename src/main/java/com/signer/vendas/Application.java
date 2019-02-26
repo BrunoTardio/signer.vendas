@@ -87,11 +87,6 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		ProdutoCategoria pc1 = new ProdutoCategoria(null, "CD");
-		ProdutoCategoria pc2 = new ProdutoCategoria(null, "PEN DRIVE");
-		ProdutoCategoria pc3 = new ProdutoCategoria(null, "MIDIA DIGITAL");
-		pcrepo.saveAll(Arrays.asList(pc1, pc2, pc3));
-
 		Cliente c1 = new Cliente(null, "brunotardio@gmail.com", "123");
 		Cliente c2 = new Cliente(null, "tardio@gmail.com", "123");
 		Cliente c3 = new Cliente(null, "fernando@gmail.com", "123");
@@ -131,9 +126,14 @@ public class Application implements CommandLineRunner {
 		
 		////////////////////////////////////////////////
 		
-		Produto prod1 = new Produto(null,"E-DIGITAL","CPF",90.0);
-		Produto prod2 = new Produto(null,"E-CNPJ Certificado","CNPJ",150.0);
-		Produto prod3 = new Produto(null, "E-CPF", "CPF", 80.0);
+		ProdutoCategoria pc1 = new ProdutoCategoria(null, "CD");
+		ProdutoCategoria pc2 = new ProdutoCategoria(null, "PEN DRIVE");
+		ProdutoCategoria pc3 = new ProdutoCategoria(null, "MIDIA DIGITAL");
+		pcrepo.saveAll(Arrays.asList(pc1, pc2, pc3));
+		
+		Produto prod1 = new Produto(null,"E-DIGITAL","CPF",pc1,180,90.0);
+		Produto prod2 = new Produto(null,"E-CNPJ Certificado","CNPJ",pc2,360,150.0);
+		Produto prod3 = new Produto(null, "E-CPF", "CPF",pc2,360, 80.0);
 		prodrepo.saveAll(Arrays.asList(prod1,prod2,prod3));
 		
 		PedidoSituacao ps1 = new PedidoSituacao(null, "EM ABERTO");

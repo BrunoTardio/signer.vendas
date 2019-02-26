@@ -9,7 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable {
@@ -20,13 +24,31 @@ public class Produto implements Serializable {
 	private Integer id;
 	private String nome;
 	private String descricao;
+	private Integer validade;
 	private Double preco;
 	
 	
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="produto")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="produto_categoria_id")
+	private ProdutoCategoria produtoCategoria;
 	
+	
+
+	public ProdutoCategoria getProdutoCategoria() {
+		return produtoCategoria;
+	}
+
+
+
+	public void setProdutoCategoria(ProdutoCategoria produtoCategoria) {
+		this.produtoCategoria = produtoCategoria;
+	}
+
+
 
 	public Produto() {
 
@@ -34,12 +56,26 @@ public class Produto implements Serializable {
 
 
 
-	public Produto(Integer id, String nome, String descricao, Double preco) {
+	public Produto(Integer id, String nome, String descricao,ProdutoCategoria produtoCategoria, Integer validade, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
+		this.produtoCategoria = produtoCategoria;
+		this.validade = validade;
 		this.preco = preco;
+	}
+
+
+
+	public Integer getValidade() {
+		return validade;
+	}
+
+
+
+	public void setValidade(Integer validade) {
+		this.validade = validade;
 	}
 
 
@@ -83,6 +119,9 @@ public class Produto implements Serializable {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+
+	
+
 
 	@Override
 	public int hashCode() {
