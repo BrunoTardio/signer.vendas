@@ -10,10 +10,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -24,7 +23,7 @@ public class ClientePF implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private String cpf;
@@ -44,6 +43,7 @@ public class ClientePF implements Serializable {
 	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="cliente_id")
+	@MapsId // mapeia o ID do Cliente para ser o mesmo em ClientePF
 	private Cliente cliente;
 
 	// ok

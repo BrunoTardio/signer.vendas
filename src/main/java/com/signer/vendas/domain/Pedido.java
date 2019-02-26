@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.signer.vendas.domain.enums.EstadoPagamento;
+import com.signer.vendas.domain.enums.EstadoPedido;
 
 @Entity
 public class Pedido implements Serializable {
@@ -18,8 +20,11 @@ public class Pedido implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer id;
-	public double valor;
+	private Integer id;
+	private double valor;
+	private Integer estadoPedido;
+	private Integer estadoPagamento;
+	
 	
 	@JsonIgnore
 	@ManyToOne
@@ -37,10 +42,6 @@ public class Pedido implements Serializable {
 	private PedidoAgenda pedidoAgenda;
 	
 
-	@ManyToOne
-	@JoinColumn(name="pedido_situacao")
-	private PedidoSituacao pedidoSituacao;
-	
     
 	@ManyToOne
 	@JoinColumn(name="produto_id")
@@ -48,19 +49,23 @@ public class Pedido implements Serializable {
 	
 	
 	
+	
+	
 	public Pedido() {
 
 	}
 
-	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj, PedidoAgenda pedidoAgenda, PedidoSituacao pedidoSituacao,Produto produto) {
+	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj, PedidoAgenda pedidoAgenda, Produto produto,EstadoPedido estadoPedido,EstadoPagamento estadoPagamento) {
 		super();
 		this.id = id;
 		this.valor = valor;
 		this.clientePF = clientepf;
 		this.clientePJ = clientepj;
 		this.pedidoAgenda = pedidoAgenda;
-		this.pedidoSituacao = pedidoSituacao;
 		this.produto = produto;
+		this.estadoPedido = estadoPedido.getCod();
+		this.estadoPagamento = estadoPagamento.getCod();
+		
 	}
 
 	public Integer getId() {
@@ -103,15 +108,6 @@ public class Pedido implements Serializable {
 		this.pedidoAgenda = pedidoAgenda;
 	}
 
-	
-
-	public PedidoSituacao getPedidoSituacao() {
-		return pedidoSituacao;
-	}
-
-	public void setPedidoSituacao(PedidoSituacao pedidoSituacao) {
-		this.pedidoSituacao = pedidoSituacao;
-	}
 
 	public Produto getProduto() {
 		return produto;
@@ -120,6 +116,27 @@ public class Pedido implements Serializable {
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
+	
+	
+	
+	// armazena internamente numero inteiro controlado com os objetos do enum
+	public EstadoPedido getEstadoPedido() {
+		return EstadoPedido.toEnum(estadoPedido);
+	}
+
+	public void setEstadoPedido(EstadoPedido estadoPedido) {
+		this.estadoPedido = estadoPedido.getCod();
+	}
+
+	// armazena internamente numero inteiro controlado com os objetos do enum
+	public EstadoPagamento getEstadoPagamento() {
+		return EstadoPagamento.toEnum(estadoPagamento);
+	}
+
+	public void setEstadoPedido(EstadoPagamento estadoPagamento) {
+		this.estadoPagamento = estadoPagamento.getCod();
+	}
+	
 
 	@Override
 	public int hashCode() {

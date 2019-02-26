@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,7 +18,6 @@ public class ClienteRG implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nomeTitular;
 	private String numeroRG;
@@ -29,6 +29,7 @@ public class ClienteRG implements Serializable {
 	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="cliente_pf")
+	@MapsId
 	ClientePF clientepf;
 	
 	public ClienteRG() {
