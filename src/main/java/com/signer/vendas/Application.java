@@ -4,6 +4,7 @@ package com.signer.vendas;
 
 
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -107,12 +108,16 @@ public class Application implements CommandLineRunner {
 		ClientePJ cpj3 = new ClientePJ(null, "Limtda", "Gustavo mecanico", "000651050", "4444444", "eirele", c4);
 		cpjrepo.saveAll(Arrays.asList(cpj1, cpj2, cpj3));
 
-		ClientePF cpf1 = new ClientePF(null, "Bruno Tardio", "0907777777", "16/08/1990" , "1910509", "1515", c1);
-		ClientePF cpf2 = new ClientePF(null, "Augosto Silva", "865656555", "16/08/1990", "191919", "1015", c2);
-		ClientePF cpf3 = new ClientePF(null, "Marcelo Divino", "090770007", "16/08/1990", "0013319", "1512", c3);		
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		
+		ClientePF cpf1 = new ClientePF(null, "Bruno Tardio", "0907777777",sdf1.parse("21/02/2000") , "1910509", "1515", c1);
+		ClientePF cpf2 = new ClientePF(null, "Augosto Silva", "865656555",sdf1.parse("21/02/1980")  , "191919", "1015", c2);
+		ClientePF cpf3 = new ClientePF(null, "Marcelo Divino", "090770007",sdf1.parse("21/02/1990")  , "0013319", "1512", c3);		
 		cpfrepo.saveAll(Arrays.asList(cpf1, cpf2, cpf3));
 		
-		ClienteRG crg1 = new ClienteRG(null, "Bruno Tardio","0000", "16", "ssp","elias","cristiane", cpf1);
+		ClienteRG crg1 = new ClienteRG(null, "Bruno Tardio","0000",sdf1.parse("21/02/2010"), "ssp","elias","cristiane", cpf1);
 		crgrepo.save(crg1);
 		
 		ClienteEleitor ce1 = new ClienteEleitor(null, "300", "jardim", "153","juiz de fora", "mg", cpf1);
@@ -135,17 +140,17 @@ public class Application implements CommandLineRunner {
 		prodrepo.saveAll(Arrays.asList(prod1,prod2,prod3));
 		
 		
-		PedidoAgenda pa1 = new PedidoAgenda(null, "30/02/18",2);
+		PedidoAgenda pa1 = new PedidoAgenda(null, sdf1.parse("26/02/2019 13:37" ),2);
 		parepo.save(pa1);
 		
 		EstadoPedido ep1 = EstadoPedido.EM_ABERTO;
 		EstadoPagamento ep2 = EstadoPagamento.LOCAL;
 		
-		Pedido p1 = new Pedido(null, 55, cpf1,null,pa1,prod1,ep1,ep2);
-		Pedido p2 = new Pedido(null, 55, cpf2,null,pa1,prod1,ep1,ep2);
-		Pedido p3 = new Pedido(null, 55, cpf3,null,pa1,prod2,ep1,ep2);
-		Pedido p4 = new Pedido(null, 55, null,cpj1,pa1,prod2,ep1,ep2);
-		Pedido p5 = new Pedido(null, 55, null,cpj2,pa1,prod3,ep1,ep2);
+		Pedido p1 = new Pedido(null, 55, cpf1,null,pa1,prod1,ep1,ep2,sdf2.parse("26/02/2019 13:37"));
+		Pedido p2 = new Pedido(null, 55, cpf2,null,pa1,prod1,ep1,ep2,sdf2.parse("26/02/2019 13:37"));
+		Pedido p3 = new Pedido(null, 55, cpf3,null,pa1,prod2,ep1,ep2,sdf2.parse("26/02/2019 13:37"));
+		Pedido p4 = new Pedido(null, 55, null,cpj1,pa1,prod2,ep1,ep2,sdf2.parse("26/02/2019 13:37"));
+		Pedido p5 = new Pedido(null, 55, null,cpj2,pa1,prod3,ep1,ep2,sdf2.parse("26/02/2019 13:37"));
 		prepo.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
 		

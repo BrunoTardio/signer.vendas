@@ -2,6 +2,7 @@ package com.signer.vendas.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -20,7 +22,9 @@ public class PedidoAgenda implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String data;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private Date data;
 	private Integer disponibilidade;
 	
 	@JsonIgnore
@@ -31,7 +35,7 @@ public class PedidoAgenda implements Serializable {
 
 	}
 
-	public PedidoAgenda(Integer id, String data, Integer disponibilidade) {
+	public PedidoAgenda(Integer id,Date data, Integer disponibilidade) {
 		super();
 		this.id = id;
 		this.data = data;
@@ -47,11 +51,11 @@ public class PedidoAgenda implements Serializable {
 		this.id = id;
 	}
 
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 

@@ -1,7 +1,7 @@
 package com.signer.vendas.domain;
 
 import java.io.Serializable;
-
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -18,10 +19,12 @@ public class ClienteRG implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nomeTitular;
 	private String numeroRG;
-	private String dataExpedicao;
+	@JsonFormat(pattern="dd/MM/yyyy")
+	private Date dataExpedicao;
 	private String orgaoExpeditor;
 	private String nomeDoPai;
 	private String nomeDaMae;
@@ -29,14 +32,13 @@ public class ClienteRG implements Serializable {
 	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="cliente_pf")
-	@MapsId
 	ClientePF clientepf;
 	
 	public ClienteRG() {
 
 	}
 
-	public ClienteRG(Integer id, String nomeTitular, String numeroRG, String dataExpedicao, String orgaoExpeditor,
+	public ClienteRG(Integer id, String nomeTitular, String numeroRG, Date dataExpedicao, String orgaoExpeditor,
 			String nomeDoPai, String nomeDaMae, ClientePF clientepf) {
 		super();
 		this.id = id;
@@ -73,11 +75,11 @@ public class ClienteRG implements Serializable {
 		this.numeroRG = numeroRG;
 	}
 
-	public String getDataExpedicao() {
+	public Date getDataExpedicao() {
 		return dataExpedicao;
 	}
 
-	public void setDataExpedicao(String dataExpedicao) {
+	public void setDataExpedicao(Date dataExpedicao) {
 		this.dataExpedicao = dataExpedicao;
 	}
 

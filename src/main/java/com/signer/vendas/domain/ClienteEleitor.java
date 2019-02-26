@@ -17,6 +17,7 @@ public class ClienteEleitor implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String numero;
 	private String secao;
@@ -27,7 +28,6 @@ public class ClienteEleitor implements Serializable {
 	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="cliente_pf")
-	@MapsId
 	private ClientePF clientePF;
 
 	public ClienteEleitor() {

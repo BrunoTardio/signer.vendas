@@ -2,6 +2,7 @@ package com.signer.vendas.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,12 +11,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -23,11 +27,13 @@ public class ClientePF implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	//@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private String cpf;
-	private String nascimento;
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
+	private Date nascimento;
 	private String cei;
 	private String pis;
 	
@@ -43,7 +49,7 @@ public class ClientePF implements Serializable {
 	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="cliente_id")
-	@MapsId // mapeia o ID do Cliente para ser o mesmo em ClientePF
+	//@MapsId  mapeia o ID do Cliente para ser o mesmo em ClientePF
 	private Cliente cliente;
 
 	// ok
@@ -70,7 +76,7 @@ public class ClientePF implements Serializable {
 
 	}
 
-	public ClientePF(Integer id, String nome, String cpf, String nascimento, String cei, String pis,Cliente cliente) {
+	public ClientePF(Integer id, String nome, String cpf, Date nascimento, String cei, String pis,Cliente cliente) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -105,11 +111,11 @@ public class ClientePF implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public String getNascimento() {
+	public Date getNascimento() {
 		return nascimento;
 	}
 
-	public void setNascimento(String nascimento) {
+	public void setNascimento(Date nascimento) {
 		this.nascimento = nascimento;
 	}
 

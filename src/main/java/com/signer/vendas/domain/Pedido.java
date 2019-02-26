@@ -1,6 +1,7 @@
 package com.signer.vendas.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.signer.vendas.domain.enums.EstadoPagamento;
 import com.signer.vendas.domain.enums.EstadoPedido;
@@ -24,6 +25,9 @@ public class Pedido implements Serializable {
 	private double valor;
 	private Integer estadoPedido;
 	private Integer estadoPagamento;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private Date instante;
 	
 	
 	@JsonIgnore
@@ -55,7 +59,7 @@ public class Pedido implements Serializable {
 
 	}
 
-	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj, PedidoAgenda pedidoAgenda, Produto produto,EstadoPedido estadoPedido,EstadoPagamento estadoPagamento) {
+	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj, PedidoAgenda pedidoAgenda, Produto produto,EstadoPedido estadoPedido,EstadoPagamento estadoPagamento,Date instante) {
 		super();
 		this.id = id;
 		this.valor = valor;
@@ -65,6 +69,7 @@ public class Pedido implements Serializable {
 		this.produto = produto;
 		this.estadoPedido = estadoPedido.getCod();
 		this.estadoPagamento = estadoPagamento.getCod();
+		this.instante = instante;
 		
 	}
 
@@ -119,6 +124,14 @@ public class Pedido implements Serializable {
 	
 	
 	
+	public Date getInstante() {
+		return instante;
+	}
+
+	public void setInstante(Date instante) {
+		this.instante = instante;
+	}
+
 	// armazena internamente numero inteiro controlado com os objetos do enum
 	public EstadoPedido getEstadoPedido() {
 		return EstadoPedido.toEnum(estadoPedido);
