@@ -2,11 +2,13 @@ package com.signer.vendas;
 
 
 
-import java.util.ArrayList;
+
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+
+import javax.xml.bind.ParseConversionEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,6 +23,8 @@ import com.signer.vendas.domain.ClientePJ;
 import com.signer.vendas.domain.ClienteRG;
 import com.signer.vendas.domain.Pedido;
 import com.signer.vendas.domain.PedidoAgenda;
+import com.signer.vendas.domain.PedidoSituacao;
+import com.signer.vendas.domain.Produto;
 import com.signer.vendas.domain.ProdutoCategoria;
 import com.signer.vendas.repository.ClienteEleitorRepository;
 import com.signer.vendas.repository.ClienteEnderecoRepository;
@@ -30,7 +34,10 @@ import com.signer.vendas.repository.ClienteRGRepository;
 import com.signer.vendas.repository.ClienteRepository;
 import com.signer.vendas.repository.PedidoAgendaRepository;
 import com.signer.vendas.repository.PedidoRepository;
+import com.signer.vendas.repository.PedidoSituacaoRepository;
+
 import com.signer.vendas.repository.ProdutoCategoriaRepository;
+import com.signer.vendas.repository.ProdutoRepository;
 import com.signer.vendas.service.ClienteService;
 
 @SpringBootApplication
@@ -66,6 +73,11 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	PedidoAgendaRepository parepo;
 	
+	@Autowired
+	PedidoSituacaoRepository psrepo;
+	
+	@Autowired
+	ProdutoRepository prodrepo;
 	
 
 	public static void main(String[] args) {
@@ -119,14 +131,22 @@ public class Application implements CommandLineRunner {
 		
 		////////////////////////////////////////////////
 		
+		Produto prod1 = new Produto(null,"E-DIGITAL","CPF",90.0);
+		Produto prod2 = new Produto(null,"E-CNPJ Certificado","CNPJ",150.0);
+		Produto prod3 = new Produto(null, "E-CPF", "CPF", 80.0);
+		prodrepo.saveAll(Arrays.asList(prod1,prod2,prod3));
+		
+		PedidoSituacao ps1 = new PedidoSituacao(null, "EM ABERTO");
+		psrepo.save(ps1);
+		
 		PedidoAgenda pa1 = new PedidoAgenda(null, "30/02/18",2);
 		parepo.save(pa1);
 		
-		Pedido p1 = new Pedido(null, 55, cpf1,null,pa1);
-		Pedido p2 = new Pedido(null, 55, cpf2,null,pa1);
-		Pedido p3 = new Pedido(null, 55, cpf3,null,pa1);
-		Pedido p4 = new Pedido(null, 55, null,cpj1,pa1);
-		Pedido p5 = new Pedido(null, 55, null,cpj2,pa1);
+		Pedido p1 = new Pedido(null, 55, cpf1,null,pa1,ps1,prod1);
+		Pedido p2 = new Pedido(null, 55, cpf2,null,pa1,ps1,prod1);
+		Pedido p3 = new Pedido(null, 55, cpf3,null,pa1,ps1,prod2);
+		Pedido p4 = new Pedido(null, 55, null,cpj1,pa1,ps1,prod2);
+		Pedido p5 = new Pedido(null, 55, null,cpj2,pa1,ps1,prod3);
 		prepo.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
 		

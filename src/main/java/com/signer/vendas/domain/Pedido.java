@@ -36,17 +36,31 @@ public class Pedido implements Serializable {
 	@JoinColumn(name="pedido_agenda")
 	private PedidoAgenda pedidoAgenda;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="pedido_situacao")
+	private PedidoSituacao pedidoSituacao;
+	
+    @JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="produto_id")
+	private Produto produto;
+	
+	
+	
 	public Pedido() {
 
 	}
 
-	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj, PedidoAgenda pedidoAgenda) {
+	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj, PedidoAgenda pedidoAgenda, PedidoSituacao pedidoSituacao,Produto produto) {
 		super();
 		this.id = id;
 		this.valor = valor;
 		this.clientePF = clientepf;
 		this.clientePJ = clientepj;
 		this.pedidoAgenda = pedidoAgenda;
+		this.pedidoSituacao = pedidoSituacao;
+		this.produto = produto;
 	}
 
 	public Integer getId() {
@@ -87,6 +101,24 @@ public class Pedido implements Serializable {
 
 	public void setPedidoAgenda(PedidoAgenda pedidoAgenda) {
 		this.pedidoAgenda = pedidoAgenda;
+	}
+
+	
+
+	public PedidoSituacao getPedidoSituacao() {
+		return pedidoSituacao;
+	}
+
+	public void setPedidoSituacao(PedidoSituacao pedidoSituacao) {
+		this.pedidoSituacao = pedidoSituacao;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
 	@Override

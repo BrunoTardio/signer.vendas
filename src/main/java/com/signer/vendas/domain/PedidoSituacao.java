@@ -1,11 +1,15 @@
 package com.signer.vendas.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class PedidoSituacao implements Serializable {
@@ -14,16 +18,19 @@ public class PedidoSituacao implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String descricao;
+	private String situacao;
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="pedidoSituacao")
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	public PedidoSituacao() {
 
 	}
 
-	public PedidoSituacao(Integer id, String descricao) {
+	public PedidoSituacao(Integer id, String situacao) {
 		super();
 		this.id = id;
-		this.descricao = descricao;
+		this.situacao = situacao;
 	}
 
 	public Integer getId() {
@@ -34,12 +41,14 @@ public class PedidoSituacao implements Serializable {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+
+
+	public String getSituacao() {
+		return situacao;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
 	}
 
 	@Override
