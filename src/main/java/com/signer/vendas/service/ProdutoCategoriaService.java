@@ -3,10 +3,14 @@ package com.signer.vendas.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.ProdutoCategoria;
 import com.signer.vendas.repository.ProdutoCategoriaRepository;
+import com.signer.vendas.service.exceptions.DataIntegrityException;
+import com.signer.vendas.service.exceptions.ObjectNotFoundException;
+
 
 @Service
 public class ProdutoCategoriaService {
@@ -16,10 +20,9 @@ public class ProdutoCategoriaService {
 	
 	
 	public ProdutoCategoria find(Integer id) {
-
 		Optional<ProdutoCategoria> obj = repo.findById(id);
-
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto nao encontrado ! ID: " + id + ", Tipo : " + ProdutoCategoria.class.getName()));
 
 	}
 
@@ -35,7 +38,11 @@ public class ProdutoCategoriaService {
 
 	public void delete(Integer id) {
 		find(id);
-		repo.deleteById(id);
+		try{repo.deleteById(id);}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Nao é possivel excluir a Descricao pois cotem produtos");
+			
+		}
 	}
 	
 }

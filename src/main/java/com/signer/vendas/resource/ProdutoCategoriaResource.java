@@ -30,6 +30,7 @@ public class ProdutoCategoriaResource {
 	public ResponseEntity<ProdutoCategoria> find(@PathVariable Integer id) {
 		ProdutoCategoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
+		
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
