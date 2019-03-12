@@ -2,8 +2,8 @@ package com.signer.vendas.resource;
 
 
 import java.net.URI;
-
-
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.signer.vendas.domain.ProdutoCategoria;
+import com.signer.vendas.dto.ProdutoCategoriaDTO;
 import com.signer.vendas.service.ProdutoCategoriaService;
 
 
@@ -53,5 +54,15 @@ public class ProdutoCategoriaResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<ProdutoCategoriaDTO>> findAll() {
+		List<ProdutoCategoria> list = service.findAll();
+		List<ProdutoCategoriaDTO> listDto = list.stream().map(obj -> new ProdutoCategoriaDTO(obj)).
+				collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+		
+	}
+	
 	
 }

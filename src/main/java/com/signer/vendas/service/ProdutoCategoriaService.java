@@ -1,5 +1,6 @@
 package com.signer.vendas.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,10 @@ public class ProdutoCategoriaService {
 			throw new DataIntegrityException("Não é possivel deleção deste item, pois contém dados atrelados");
 			
 		}
+	}
+	
+	public List<ProdutoCategoria> findAll(){
+		return repo.findAll();
 	}
 	
 }
