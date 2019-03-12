@@ -18,7 +18,7 @@ public class ProdutoCategoriaService {
 	@Autowired
 	private ProdutoCategoriaRepository repo;
 	
-	
+	//tratamento de excessao
 	public ProdutoCategoria find(Integer id) {
 		Optional<ProdutoCategoria> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.ClienteEleitor;
 import com.signer.vendas.repository.ClienteEleitorRepository;
+import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
-import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
 public class ClienteEleitorService {
@@ -18,6 +18,7 @@ public class ClienteEleitorService {
 
 	public ClienteEleitor find(Integer id) throws ObjectNotFoundException  {
 		Optional<ClienteEleitor> obj = repo.findById(id);
+		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto nao encontrado! id: "+ id + ", Tipo: "+ ClienteEleitor.class.getName()));
 	}

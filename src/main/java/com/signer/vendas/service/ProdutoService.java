@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.Produto;
 import com.signer.vendas.repository.ProdutoRepository;
+import com.signer.vendas.service.exceptions.ObjectNotFoundException;
+
 
 @Service
 public class ProdutoService {
@@ -17,6 +19,7 @@ public class ProdutoService {
 	public Produto find(Integer id) {
 
 		Optional<Produto> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto nao encontrado ! ID: " + id + ", Tipo : " + Produto.class.getName()));
 	}
 }

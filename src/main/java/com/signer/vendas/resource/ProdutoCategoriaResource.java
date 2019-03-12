@@ -3,7 +3,7 @@ package com.signer.vendas.resource;
 
 import java.net.URI;
 
-import javax.servlet.Servlet;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
