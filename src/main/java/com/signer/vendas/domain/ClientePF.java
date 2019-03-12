@@ -61,7 +61,7 @@ public class ClientePF implements Serializable {
 	private ClienteEleitor clienteEleitor;
 	
 	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="clientePF")
+	@OneToMany(mappedBy="clientePF")
 	private List<Pedido> pedidos = new ArrayList<>();
 
 	public List<Pedido> getPedidos() {

@@ -28,7 +28,7 @@ public class Produto implements Serializable {
 	private Double preco;
 	
 	@JsonIgnore
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="produto")
+	@OneToMany(mappedBy="produto")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
 	

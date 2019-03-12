@@ -28,7 +28,7 @@ public class PedidoAgenda implements Serializable {
 	private Integer disponibilidade;
 	
 	@JsonIgnore
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="pedidoAgenda")
+	@OneToMany(mappedBy="pedidoAgenda")
 	private List<Pedido> pedidos = new ArrayList<>();
 
 	public PedidoAgenda() {

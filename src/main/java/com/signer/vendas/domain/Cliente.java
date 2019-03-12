@@ -29,7 +29,7 @@ public class Cliente implements Serializable {
 	private String senha;
 	
 
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="cliente")
+	@OneToMany(mappedBy="cliente")
 	private List<ClientePJ> clientesPJ = new ArrayList<>();
 	
 

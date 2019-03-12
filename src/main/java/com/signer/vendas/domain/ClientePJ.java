@@ -38,7 +38,7 @@ public class ClientePJ implements Serializable {
 	private List<ClienteEndereco> clienteEnderecos = new ArrayList<>();
 	
 
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="clientePJ")
+	@OneToMany(mappedBy="clientePJ")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public ClientePJ() {

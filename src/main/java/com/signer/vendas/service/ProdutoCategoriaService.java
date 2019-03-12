@@ -40,7 +40,7 @@ public class ProdutoCategoriaService {
 		find(id);
 		try{repo.deleteById(id);}
 		catch(DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Nao é possivel excluir a Descricao pois cotem produtos");
+			throw new DataIntegrityException("Não é possivel deleção deste item, pois contém dados atrelados");
 			
 		}
 	}
