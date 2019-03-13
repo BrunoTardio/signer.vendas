@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.signer.vendas.domain.Produto;
 import com.signer.vendas.domain.ProdutoCategoria;
 import com.signer.vendas.dto.ProdutoCategoriaDTO;
 import com.signer.vendas.repository.ProdutoCategoriaRepository;
@@ -37,8 +38,9 @@ public class ProdutoCategoriaService {
 	}
 
 	public ProdutoCategoria update(ProdutoCategoria obj) {
-		find(obj.getId()); // chamo no banco apenas para ver se o objeto existe
-		return repo.save(obj);
+		ProdutoCategoria newObj = find(obj.getId()); 
+		updateData(newObj,obj);
+		return repo.save(newObj);
 	}
 
 	public void delete(Integer id) {
@@ -65,6 +67,10 @@ public class ProdutoCategoriaService {
 		return new ProdutoCategoria(objDto.getId(), objDto.getNome());
 	}
 	
+private void updateData(ProdutoCategoria newObj, ProdutoCategoria obj) {
+		
+		newObj.setNome(obj.getNome());
+	}
 	
 	
 }
