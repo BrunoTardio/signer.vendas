@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -37,15 +39,17 @@ public class ProdutoCategoriaResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody ProdutoCategoria obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ProdutoCategoriaDTO objDto) {
+		ProdutoCategoria obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@RequestMapping(value="/{id}")
-	public ResponseEntity<Void> update(@RequestBody ProdutoCategoria obj, @PathVariable Integer id){
+	@RequestMapping(value="/{id}",method =RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody ProdutoCategoriaDTO objDto, @PathVariable Integer id){
+		ProdutoCategoria obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.ProdutoCategoria;
+import com.signer.vendas.dto.ProdutoCategoriaDTO;
 import com.signer.vendas.repository.ProdutoCategoriaRepository;
 import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
@@ -59,5 +60,11 @@ public class ProdutoCategoriaService {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
+	
+	public ProdutoCategoria fromDTO(ProdutoCategoriaDTO objDto) {
+		return new ProdutoCategoria(objDto.getId(), objDto.getNome());
+	}
+	
+	
 	
 }
