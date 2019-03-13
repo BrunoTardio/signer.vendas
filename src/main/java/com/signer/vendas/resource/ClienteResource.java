@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.signer.vendas.domain.Cliente;
+import com.signer.vendas.domain.Cliente;
 import com.signer.vendas.dto.ClienteDTO;
 import com.signer.vendas.service.ClienteService;
 
@@ -33,7 +34,6 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	
 	@RequestMapping(value="/{id}",method =RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id){
 		Cliente obj = service.fromDTO(objDto);
@@ -57,7 +57,7 @@ public class ClienteResource {
 		
 	}
 	
-	@RequestMapping(value ="/page", method = RequestMethod.GET)
+	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<ClienteDTO>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
@@ -67,9 +67,6 @@ public class ClienteResource {
 		Page<ClienteDTO> listDto = list.map(obj -> new ClienteDTO(obj));
 
 		return ResponseEntity.ok().body(listDto);
-
 	}
-
-	
 	
 }

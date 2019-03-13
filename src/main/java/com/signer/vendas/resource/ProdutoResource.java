@@ -1,6 +1,7 @@
 package com.signer.vendas.resource;
 
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.signer.vendas.domain.Produto;
+import com.signer.vendas.domain.ProdutoCategoria;
+import com.signer.vendas.dto.ProdutoCategoriaDTO;
 import com.signer.vendas.dto.ProdutoDTO;
-
+import com.signer.vendas.dto.ProdutoNewDTO;
 import com.signer.vendas.service.ProdutoService;
 
 @RestController
@@ -34,7 +37,21 @@ public class ProdutoResource {
 		Produto obj = service.find(id);
 
 		return ResponseEntity.ok().body(obj);
+	
 	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ProdutoNewDTO objDto) {
+		Produto obj = service.fromDTO(objDto);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+
+		return ResponseEntity.created(uri).build();
+	}
+	
+	
+	
+	
 	@RequestMapping(value="/{id}",method =RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ProdutoDTO objDto, @PathVariable Integer id){
 		Produto obj = service.fromDTO(objDto);

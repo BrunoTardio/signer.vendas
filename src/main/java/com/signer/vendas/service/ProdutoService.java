@@ -3,6 +3,8 @@ package com.signer.vendas.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -11,9 +13,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.Produto;
+import com.signer.vendas.domain.ProdutoCategoria;
 import com.signer.vendas.domain.Produto;
 import com.signer.vendas.dto.ProdutoDTO;
+import com.signer.vendas.dto.ProdutoNewDTO;
 import com.signer.vendas.dto.ProdutoDTO;
+import com.signer.vendas.repository.ProdutoCategoriaRepository;
 import com.signer.vendas.repository.ProdutoRepository;
 import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
@@ -23,6 +28,9 @@ public class ProdutoService {
 
 	@Autowired
 	private ProdutoRepository repo;
+	
+	@Autowired
+	private ProdutoCategoriaRepository pcrepo;
 
 	public Produto find(Integer id) {
 
@@ -31,11 +39,14 @@ public class ProdutoService {
 				"Objeto nao encontrado ! ID: " + id + ", Tipo : " + Produto.class.getName()));
 	}
 
+	
+	
 	public Produto insert(Produto obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
-
+	
+	@Transactional
 	public Produto update(Produto obj) {
 		Produto newObj = find(obj.getId()); 
 		updateData(newObj,obj);
@@ -65,6 +76,13 @@ public class ProdutoService {
 	public Produto fromDTO(ProdutoDTO objDto) {
 		
 		return new Produto(objDto.getId(),objDto.getNome(),objDto.getDescricao(),null,objDto.getValidade(),objDto.getPreco());
+	}
+
+	public Produto fromDTO(ProdutoNewDTO objDto) {
+	
+	 ProdutoCategoria pc = new ProdutoCategoria(objDto.getProdutoCategoriaId(), null);
+	 Produto pro = new Produto(null,objDto.getNome(),objDto.getDescricao(),pc,objDto.getValidade(),objDto.getPreco());
+			 return pro;
 	}
 	
 	private void updateData(Produto newObj, Produto obj) {
