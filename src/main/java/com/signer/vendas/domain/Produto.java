@@ -32,7 +32,7 @@ public class Produto implements Serializable {
 	private List<Pedido> pedidos = new ArrayList<>();
 	
 	
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name="produto_categoria_id")
 	private ProdutoCategoria produtoCategoria;
 	

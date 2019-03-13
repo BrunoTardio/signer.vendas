@@ -67,8 +67,8 @@ public class Pedido implements Serializable {
 		this.clientePJ = clientepj;
 		this.pedidoAgenda = pedidoAgenda;
 		this.produto = produto;
-		this.estadoPedido = estadoPedido.getCod();
-		this.estadoPagamento = estadoPagamento.getCod();
+		this.estadoPedido = (estadoPedido==null) ? null : estadoPedido.getCod();
+		this.estadoPagamento = (estadoPagamento==null) ? null : estadoPagamento.getCod();
 		this.instante = instante;
 		
 	}

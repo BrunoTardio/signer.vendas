@@ -16,9 +16,10 @@ public class ClienteDTO implements Serializable{
 	}
 	
 	public ClienteDTO(Cliente obj) {
-		id = obj.getId();
-		login = obj.getLogin();
-		senha = obj.getSenha();			
+		this.id = obj.getId();
+		this.login = obj.getLogin();
+		this.senha = obj.getSenha();	
+	
 	}
 
 	public Integer getId() {
