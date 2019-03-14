@@ -21,6 +21,7 @@ import com.signer.vendas.domain.ClienteEleitor;
 import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.Produto;
 import com.signer.vendas.domain.ProdutoCategoria;
+
 import com.signer.vendas.dto.ClienteEleitorNewDTO;
 import com.signer.vendas.dto.ClienteNewDTO;
 import com.signer.vendas.dto.ProdutoNewDTO;
@@ -52,7 +53,13 @@ public class ClienteEleitorResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	
+	@RequestMapping(value="/{id}",method =RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody ClienteEleitorNewDTO objDto, @PathVariable Integer id){
+		ClienteEleitor obj = service.fromDTO(objDto);
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
 	
 	
 	

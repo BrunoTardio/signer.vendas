@@ -12,6 +12,7 @@ import com.signer.vendas.domain.ClienteEleitor;
 import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.Produto;
 import com.signer.vendas.dto.ClienteEleitorNewDTO;
+import com.signer.vendas.dto.ProdutoDTO;
 import com.signer.vendas.repository.ClienteEleitorRepository;
 import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClienteRepository;
@@ -46,9 +47,22 @@ public class ClienteEleitorService {
 		return obj;
 	}
 	
+	@Transactional
+	public ClienteEleitor update(ClienteEleitor obj) {
+		ClienteEleitor newObj = find(obj.getId()); 
+		updateData(newObj,obj);
+		return repo.save(newObj);
+	}
+	
+	
+	
+	
+	
 
 	
 	//
+	
+	
 	public ClienteEleitor fromDTO(ClienteEleitorNewDTO objDto) {
 
 		Cliente cli = new Cliente(objDto.getClienteId(), null, null);
@@ -60,4 +74,14 @@ public class ClienteEleitorService {
 	}
 	
 	
+	private void updateData(ClienteEleitor newObj, ClienteEleitor obj) {
+
+		newObj.setCidade(obj.getCidade());
+		newObj.setClientePF(obj.getClientePF());
+		newObj.setNumero(obj.getNumero());
+		newObj.setSecao(obj.getSecao());
+		newObj.setUf(obj.getUf());
+		newObj.setZona(obj.getZona());
+
+	}
 }
