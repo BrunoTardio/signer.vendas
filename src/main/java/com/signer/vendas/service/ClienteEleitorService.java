@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.Cliente;
@@ -16,6 +17,7 @@ import com.signer.vendas.dto.ProdutoDTO;
 import com.signer.vendas.repository.ClienteEleitorRepository;
 import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClienteRepository;
+import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
 
@@ -54,7 +56,15 @@ public class ClienteEleitorService {
 		return repo.save(newObj);
 	}
 	
-	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel deleção deste item, pois contém dados atrelados");
+
+		}
+	}
 	
 	
 	

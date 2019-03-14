@@ -57,7 +57,7 @@ public class ClientePF implements Serializable {
 	private ClienteRG clienterg;
 	
 	// ok
-	@OneToOne(cascade=CascadeType.ALL,mappedBy="clientePF")
+	@OneToOne(cascade=CascadeType.REMOVE,mappedBy="clientePF")
 	private ClienteEleitor clienteEleitor;
 	
 	
