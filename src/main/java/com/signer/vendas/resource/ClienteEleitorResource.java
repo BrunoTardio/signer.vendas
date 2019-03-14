@@ -40,7 +40,6 @@ public class ClienteEleitorResource {
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException{
-		
 		ClienteEleitor obj = service.find(id);
 		return ResponseEntity.ok().body(obj);	
 		}
