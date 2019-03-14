@@ -1,17 +1,22 @@
 package com.signer.vendas.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.Cliente;
 import com.signer.vendas.domain.ClienteEleitor;
 import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.Produto;
+import com.signer.vendas.domain.ClienteEleitor;
 import com.signer.vendas.dto.ClienteEleitorNewDTO;
 import com.signer.vendas.dto.ProdutoDTO;
 import com.signer.vendas.repository.ClienteEleitorRepository;
@@ -66,7 +71,16 @@ public class ClienteEleitorService {
 		}
 	}
 	
+	public List<ClienteEleitor> findAll(){
+		return repo.findAll();
+	}
 	
+	 
+	public Page<ClienteEleitor> findPage(Integer page, Integer linesPerPage, String orderBy, String direction ){
+		
+			PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
+	}
 	
 
 	
