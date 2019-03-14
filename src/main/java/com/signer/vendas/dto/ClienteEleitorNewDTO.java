@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.signer.vendas.domain.ClienteEleitor;
 
-public class ClienteEleitorDTO implements Serializable{
+public class ClienteEleitorNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -14,19 +14,23 @@ public class ClienteEleitorDTO implements Serializable{
 	private String zona;
 	private String cidade;
 	private String uf;
+	private Integer clientePFId;
+	private Integer clienteId;
 	
 	
-	public ClienteEleitorDTO() {
+	public ClienteEleitorNewDTO() {
 		
 	}
 	
-	public ClienteEleitorDTO(ClienteEleitor obj) {
+	public ClienteEleitorNewDTO(ClienteEleitor obj) {
 		id = obj.getId();
 		numero = obj.getNumero();
 		secao = obj.getSecao();
 		zona = obj.getZona();
 		cidade = obj.getCidade();
 		uf = obj.getUf();
+		clientePFId = (obj.getClientePF().getId() == null) ? null : obj.getClientePF().getId();
+		clienteId =  (obj.getClientePF().getCliente().getId() == null) ? null : obj.getClientePF().getCliente().getId();
 		
 	}
 
@@ -90,6 +94,19 @@ public class ClienteEleitorDTO implements Serializable{
 		this.uf = uf;
 	}
 
+	public Integer getClientePFId() {
+		return clientePFId;
+	}
 	
+	public void setClientePFId(Integer clientePFId) {
+		this.clientePFId =  clientePFId;
+	}
 	
+	public Integer getClienteId() {
+		return clienteId;
+	}
+	
+	public void setClienteId(Integer clienteId) {
+		this.clienteId =  clienteId;
+	}
 }
