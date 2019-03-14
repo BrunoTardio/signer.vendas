@@ -42,7 +42,7 @@ public class ProdutoResource {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody ProdutoNewDTO objDto) {
-		Produto obj = service.fromDTO(objDto);
+		Produto obj = service.fromDTO(objDto); // trouxe um objeto injetando o ProdutoCategoria com Produto
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
@@ -53,7 +53,7 @@ public class ProdutoResource {
 	
 	
 	@RequestMapping(value="/{id}",method =RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody ProdutoDTO objDto, @PathVariable Integer id){
+	public ResponseEntity<Void> update(@Valid @RequestBody ProdutoNewDTO objDto, @PathVariable Integer id){
 		Produto obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);

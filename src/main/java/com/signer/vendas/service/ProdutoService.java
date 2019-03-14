@@ -80,7 +80,8 @@ public class ProdutoService {
 
 	public Produto fromDTO(ProdutoNewDTO objDto) {
 	
-	 ProdutoCategoria pc = new ProdutoCategoria(objDto.getProdutoCategoriaId(), null);
+	 ProdutoCategoria pc= new ProdutoCategoria(objDto.getProdutoCategoriaId(),null);
+	 
 	 Produto pro = new Produto(null,objDto.getNome(),objDto.getDescricao(),pc,objDto.getValidade(),objDto.getPreco());
 			 return pro;
 	}
@@ -91,6 +92,7 @@ public class ProdutoService {
 		newObj.setNome(obj.getNome());
 		newObj.setPreco(obj.getPreco());
 		newObj.setValidade(obj.getValidade());
+		newObj.setProdutoCategoria(obj.getProdutoCategoria());
 	}
 	
 }

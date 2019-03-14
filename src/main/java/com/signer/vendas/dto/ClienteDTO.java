@@ -10,6 +10,7 @@ public class ClienteDTO implements Serializable{
 	private Integer id;
 	private String login;
 	private String senha;
+
 	
 	public ClienteDTO() {
 		
@@ -18,7 +19,8 @@ public class ClienteDTO implements Serializable{
 	public ClienteDTO(Cliente obj) {
 		this.id = obj.getId();
 		this.login = obj.getLogin();
-		this.senha = obj.getSenha();	
+		this.senha = obj.getSenha();
+		
 	
 	}
 
@@ -45,5 +47,7 @@ public class ClienteDTO implements Serializable{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+
 
 }

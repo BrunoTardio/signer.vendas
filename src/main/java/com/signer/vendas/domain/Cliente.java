@@ -29,11 +29,11 @@ public class Cliente implements Serializable {
 	private String senha;
 	
 
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="cliente")
 	private List<ClientePJ> clientesPJ = new ArrayList<>();
 	
 
-	@OneToOne(mappedBy="cliente")
+	@OneToOne(cascade=CascadeType.ALL,mappedBy="cliente")
 	private ClientePF clientePF;
 	
 
@@ -114,7 +114,7 @@ public class Cliente implements Serializable {
 	public void setEmails(Set<String> emails) {
 		this.emails = emails;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
