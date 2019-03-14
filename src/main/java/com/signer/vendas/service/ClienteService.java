@@ -12,6 +12,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,11 +81,32 @@ public class ClienteService {
 	}
 	
 	
+	
+	
+	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public Cliente fromDTO(ClienteDTO objDto) {
 
 		return new Cliente(null, objDto.getLogin(), objDto.getSenha());
 	}
 
+
+	
+	
 	public Cliente fromDTO(ClienteNewDTO objDto) {
 
 		Cliente cli = new Cliente(null, objDto.getLogin(), objDto.getSenha());
