@@ -38,10 +38,6 @@ public class ClientePF implements Serializable {
 	private String pis;
 	
 
-	@ElementCollection
-	@CollectionTable(name="ClienteRGTeste")
-	private Set<ClienteRG> clienteRG = new HashSet<>();
-	
 
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="clientePF")
 	private List<ClienteEndereco> clienteEnderecos = new ArrayList<>();
@@ -143,13 +139,6 @@ public class ClientePF implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public Set<ClienteRG> getClienteRG() {
-		return clienteRG;
-	}
-
-	public void setClienteRG(Set<ClienteRG> clienteRG) {
-		this.clienteRG = clienteRG;
-	}
 
 	public ClienteRG getClienterg() {
 		return clienterg;

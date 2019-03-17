@@ -34,7 +34,7 @@ public class ClientePJ implements Serializable {
 	private Cliente cliente;
 	
 
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="clientePJ")
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="clientePJ")
 	private List<ClienteEndereco> clienteEnderecos = new ArrayList<>();
 	
 
