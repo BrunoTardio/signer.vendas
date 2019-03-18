@@ -127,6 +127,15 @@ public class ClienteEndereco implements Serializable {
 	public void setClientePF(ClientePF clientePF) {
 		this.clientePF = clientePF;
 	}
+	
+
+	public ClientePJ getClientePJ() {
+		return clientePJ;
+	}
+
+	public void setClientePJ(ClientePJ clientePJ) {
+		this.clientePJ = clientePJ;
+	}
 
 	@Override
 	public int hashCode() {

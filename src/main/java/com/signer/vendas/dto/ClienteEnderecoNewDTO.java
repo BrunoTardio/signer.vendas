@@ -2,6 +2,8 @@ package com.signer.vendas.dto;
 
 import java.io.Serializable;
 
+import com.signer.vendas.domain.ClienteEndereco;
+
 public class ClienteEnderecoNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -15,16 +17,32 @@ public class ClienteEnderecoNewDTO implements Serializable{
 	private String cidade;
 	private String uf;
 	
-	private Integer ClienteId;
+	private Integer clienteId;
 	
-	private Integer ClientePFId;
-	private Integer ClientePJId;
+	private Integer clientePFId;
+	private Integer clientePJId;
 	
 	
 	public ClienteEnderecoNewDTO() {
 		
 	}
 
+	public ClienteEnderecoNewDTO(ClienteEndereco obj) {
+		this.id = obj.getId();
+		this.logradouro = obj.getLogradouro();
+		this.numero = obj.getNumero();
+		this.complemento = obj.getComplemento();
+		this.bairro = obj.getBairro();
+		this.cep = obj.getCep();
+		this.cidade = obj.getCidade();
+		this.uf = obj.getUf();
+		this.clienteId = (obj.getClientePF()!= null) ? obj.getClientePF().getCliente().getId()
+				: obj.getClientePJ().getCliente().getId();
+		this.clientePFId = (obj.getClientePF() != null) ? obj.getClientePF().getId() : null;
+		this.clientePJId = (obj.getClientePJ() != null) ? obj.getClientePJ().getId() : null;
+
+	}
+	
 
 	public Integer getId() {
 		return id;
@@ -105,35 +123,28 @@ public class ClienteEnderecoNewDTO implements Serializable{
 		this.uf = uf;
 	}
 
-
 	public Integer getClienteId() {
-		return ClienteId;
+		return clienteId;
 	}
-
 
 	public void setClienteId(Integer clienteId) {
-		ClienteId = clienteId;
+		this.clienteId = clienteId;
 	}
-
 
 	public Integer getClientePFId() {
-		return ClientePFId;
+		return clientePFId;
 	}
-
 
 	public void setClientePFId(Integer clientePFId) {
-		ClientePFId = clientePFId;
+		this.clientePFId = clientePFId;
 	}
-
 
 	public Integer getClientePJId() {
-		return ClientePJId;
+		return clientePJId;
 	}
-
 
 	public void setClientePJId(Integer clientePJId) {
-		ClientePJId = clientePJId;
+		this.clientePJId = clientePJId;
 	}
-	
-	
+
 }

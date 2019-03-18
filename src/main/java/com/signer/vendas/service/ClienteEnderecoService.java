@@ -18,6 +18,9 @@ import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.ClientePJ;
 import com.signer.vendas.dto.ClienteEnderecoNewDTO;
 import com.signer.vendas.repository.ClienteEnderecoRepository;
+import com.signer.vendas.repository.ClientePFRepository;
+import com.signer.vendas.repository.ClientePJRepository;
+import com.signer.vendas.repository.ClienteRepository;
 import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
@@ -26,6 +29,17 @@ public class ClienteEnderecoService {
 
 	@Autowired
 	private ClienteEnderecoRepository repo;
+	
+	@Autowired
+	private ClienteRepository crepo;
+	
+	@Autowired
+	private ClientePJRepository cpjrepo;
+	
+	@Autowired
+	private ClientePFRepository cpfrepo;
+	
+	
 
 	public ClienteEndereco find(Integer id) {
 
@@ -35,11 +49,21 @@ public class ClienteEnderecoService {
 	}
 
 
+	@Transactional
 	public ClienteEndereco insert(ClienteEndereco obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		repo.save(obj);
+		if (obj.getClientePF() != null) {
+			cpfrepo.save(obj.getClientePF());
+			crepo.save(obj.getClientePF().getCliente());
+		}
+		if (obj.getClientePJ() != null) {
+			cpjrepo.save(obj.getClientePJ());
+			crepo.save(obj.getClientePJ().getCliente());
+		}
+		return obj;
 	}
-	
+
 	@Transactional
 	public ClienteEndereco update(ClienteEndereco obj) {
 		ClienteEndereco newObj = find(obj.getId()); 
@@ -76,16 +100,26 @@ public class ClienteEnderecoService {
 		if (objDto.getClientePFId() != null) {
 			clientePF.setCliente(cliente);
 			clientePF.setId(objDto.getClientePFId());
+
+			ClienteEndereco clienteEndereco = new ClienteEndereco(null, objDto.getLogradouro(), objDto.getNumero(),
+					objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), objDto.getCidade(), objDto.getUf(),
+					clientePF, null);
+			
+			
+			return clienteEndereco;
+
 		} else {
 			clientePJ.setCliente(cliente);
-			clientePJ.setId(objDto.getClientePFId());
+			clientePJ.setId(objDto.getClientePJId());
+
+			ClienteEndereco clienteEndereco = new ClienteEndereco(null, objDto.getLogradouro(), objDto.getNumero(),
+					objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), objDto.getCidade(), objDto.getUf(),
+					null, clientePJ);
+	
+			
+			return clienteEndereco;
+
 		}
-
-		ClienteEndereco clienteEndereco = new ClienteEndereco(null, objDto.getLogradouro(), objDto.getNumero(),
-				objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), objDto.getCidade(), objDto.getUf(),
-				clientePF, clientePJ);
-
-		return clienteEndereco;
 
 	}
 
@@ -96,10 +130,16 @@ public class ClienteEnderecoService {
 //	}
 //	
 	private void updateData(ClienteEndereco newObj, ClienteEndereco obj) {
-		
-	
+
+		newObj.setBairro(obj.getBairro());
+		newObj.setCep(obj.getCep());
+		newObj.setCidade(obj.getCidade());
+		newObj.setComplemento(obj.getComplemento());
+		newObj.setId(obj.getId());
+		newObj.setLogradouro(obj.getLogradouro());
+		newObj.setNumero(obj.getNumero());
+		newObj.setUf(obj.getUf());
+
 	}
-	
-	
-	
+
 }
