@@ -26,7 +26,7 @@ public class Pedido implements Serializable {
 	private Integer estadoPedido;
 	private Integer estadoPagamento;
 	
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm",locale = "UTC-03")
 	private Date instante;
 	
 	

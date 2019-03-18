@@ -31,6 +31,7 @@ public class ProdutoService {
 	
 	@Autowired
 	private ProdutoCategoriaRepository pcrepo;
+	
 
 	public Produto find(Integer id) {
 
@@ -72,6 +73,8 @@ public class ProdutoService {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
+	
+
 
 	public Produto fromDTO(ProdutoDTO objDto) {
 		

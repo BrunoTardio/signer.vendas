@@ -23,7 +23,7 @@ public class PedidoAgenda implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm",locale = "UTC-03")
 	private Date data;
 	private Integer disponibilidade;
 	
