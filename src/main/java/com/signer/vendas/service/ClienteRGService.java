@@ -43,9 +43,9 @@ public class ClienteRGService {
 	@Transactional
 	public ClienteRG insert(ClienteRG obj) {
 		obj.setId(null);
-		repo.save(obj);
 		cpfrepo.save(obj.getClientepf());
 		crepo.save(obj.getClientepf().getCliente());
+		repo.save(obj);
 		return obj;
 	}
 	
