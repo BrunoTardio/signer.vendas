@@ -1,5 +1,6 @@
 package com.signer.vendas.service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.PedidoAgenda;
+import com.signer.vendas.domain.ProdutoCategoria;
 import com.signer.vendas.dto.PedidoAgendaDTO;
 import com.signer.vendas.repository.PedidoAgendaRepository;
 import com.signer.vendas.service.exceptions.DataIntegrityException;
@@ -36,8 +38,11 @@ public class PedidoAgendaService {
 	}
 
 	public PedidoAgenda update(PedidoAgenda obj) {
-		find(obj.getId()); // chamo no banco apenas para ver se o objeto existe
-		return repo.save(obj);
+		PedidoAgenda newObj = find(obj.getId()); 
+		updateData(newObj,obj);
+		return repo.save(newObj);
+		
+		
 	}
 
 	public void delete(Integer id) {
@@ -61,7 +66,19 @@ public class PedidoAgendaService {
 	}
 
 	public PedidoAgenda fromDTO(PedidoAgendaDTO objDto) {
-		return new PedidoAgenda(objDto.getId(), null,objDto.getDisponibilidade());
+		
+		return new PedidoAgenda(objDto.getId(), null,objDto.getDisponibilidade()); 
+	}
+
+	private void updateData(PedidoAgenda newObj, PedidoAgenda obj) {
+
+		newObj.setData(obj.getData());
+		newObj.setDisponibilidade(obj.getDisponibilidade());
+		newObj.setId(obj.getId());
+		newObj.setPedidos(obj.getPedidos());
 	}
 
 }
+
+
+
