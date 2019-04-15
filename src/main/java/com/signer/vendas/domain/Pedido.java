@@ -42,12 +42,6 @@ public class Pedido implements Serializable {
 	
 
 	@ManyToOne
-	@JoinColumn(name="pedido_agenda")
-	private PedidoAgenda pedidoAgenda;
-	
-
-    
-	@ManyToOne
 	@JoinColumn(name="produto_id")
 	private Produto produto;
 	
@@ -59,13 +53,12 @@ public class Pedido implements Serializable {
 
 	}
 
-	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj, PedidoAgenda pedidoAgenda, Produto produto,EstadoPedido estadoPedido,EstadoPagamento estadoPagamento,Date instante) {
+	public Pedido(Integer id, double valor, ClientePF clientepf, ClientePJ clientepj, Produto produto,EstadoPedido estadoPedido,EstadoPagamento estadoPagamento,Date instante) {
 		super();
 		this.id = id;
 		this.valor = valor;
 		this.clientePF = clientepf;
 		this.clientePJ = clientepj;
-		this.pedidoAgenda = pedidoAgenda;
 		this.produto = produto;
 		this.estadoPedido = (estadoPedido==null) ? null : estadoPedido.getCod();
 		this.estadoPagamento = (estadoPagamento==null) ? null : estadoPagamento.getCod();
@@ -103,14 +96,6 @@ public class Pedido implements Serializable {
 
 	public void setClientePJ(ClientePJ clientePJ) {
 		this.clientePJ = clientePJ;
-	}
-
-	public PedidoAgenda getPedidoAgenda() {
-		return pedidoAgenda;
-	}
-
-	public void setPedidoAgenda(PedidoAgenda pedidoAgenda) {
-		this.pedidoAgenda = pedidoAgenda;
 	}
 
 

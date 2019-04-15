@@ -19,17 +19,17 @@ import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.ClientePJ;
 import com.signer.vendas.domain.Pedido;
 import com.signer.vendas.domain.Pedido;
-import com.signer.vendas.domain.PedidoAgenda;
+
 import com.signer.vendas.domain.Produto;
 import com.signer.vendas.domain.ProdutoCategoria;
 import com.signer.vendas.domain.enums.EstadoPagamento;
 import com.signer.vendas.domain.enums.EstadoPedido;
 import com.signer.vendas.dto.PedidoNewDTO;
-import com.signer.vendas.dto.PedidoAgendaDTO;
+
 import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClientePJRepository;
 import com.signer.vendas.repository.ClienteRepository;
-import com.signer.vendas.repository.PedidoAgendaRepository;
+
 import com.signer.vendas.repository.PedidoRepository;
 import com.signer.vendas.repository.ProdutoCategoriaRepository;
 import com.signer.vendas.repository.ProdutoRepository;
@@ -47,8 +47,7 @@ public class PedidoService {
 	private ClientePJRepository cpjrepo;
 	@Autowired
 	private ClientePFRepository cpfrepo;
-	@Autowired
-	private PedidoAgendaRepository parepo;
+
 	@Autowired
 	private ProdutoCategoriaRepository  pcrepo;
 	@Autowired
@@ -78,7 +77,7 @@ public class PedidoService {
 			cpjrepo.save(obj.getClientePJ());
 			crepo.save(obj.getClientePJ().getCliente());
 		}
-		parepo.save(obj.getPedidoAgenda());
+		
 		pcrepo.save(obj.getProduto().getProdutoCategoria());
 		prepo.save(obj.getProduto());
 		
@@ -110,7 +109,6 @@ public class PedidoService {
 		Cliente cliente = new Cliente(objDto.getClienteId(), null, null);
 		ClientePJ clientePJ = new ClientePJ();
 		ClientePF clientePF = new ClientePF();
-		PedidoAgenda pedidoAgenda = new PedidoAgenda(objDto.getPedidoAgendaId(), null, null);
 
 		Optional<Produto> produto;
 		produto = prepo.findById(objDto.getProdutoId());
@@ -120,7 +118,7 @@ public class PedidoService {
 			clientePF.setCliente(cliente);
 			clientePF.setId(objDto.getClientePFId());
 
-			Pedido pedido = new Pedido(null, objDto.getValor(), clientePF, null, pedidoAgenda, produto.orElse(null),
+			Pedido pedido = new Pedido(null, objDto.getValor(), clientePF, null, produto.orElse(null),
 					null, null, objDto.getInstante());
 
 			return pedido;
@@ -129,7 +127,7 @@ public class PedidoService {
 			clientePJ.setCliente(cliente);
 			clientePJ.setId(objDto.getClientePFId());
 
-			Pedido pedido = new Pedido(null, objDto.getValor(), null, clientePJ, pedidoAgenda,produto.orElse(null),
+			Pedido pedido = new Pedido(null, objDto.getValor(), null, clientePJ,produto.orElse(null),
 					null, null, objDto.getInstante());
 
 			return pedido;

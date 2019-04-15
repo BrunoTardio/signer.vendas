@@ -21,8 +21,6 @@ public class PedidoNewDTO implements Serializable {
 	private Integer clientePFId;
 	private Integer clientePJId;
 	
-	private Integer pedidoAgendaId;
-	
 	private Integer produtoId;
 	
 	
@@ -43,7 +41,6 @@ public class PedidoNewDTO implements Serializable {
 				: obj.getClientePJ().getCliente().getId();
 		this.clientePFId = (obj.getClientePF() != null) ? obj.getClientePF().getId() : null;
 		this.clientePJId = (obj.getClientePJ() != null) ? obj.getClientePJ().getId() : null;
-		this.pedidoAgendaId = obj.getPedidoAgenda().getId();
 		this.produtoId = obj.getProduto().getId();
 		
 
@@ -113,13 +110,6 @@ public class PedidoNewDTO implements Serializable {
 		this.clientePJId = clientePJId;
 	}
 
-	public Integer getPedidoAgendaId() {
-		return pedidoAgendaId;
-	}
-
-	public void setPedidoAgendaId(Integer pedidoAgendaId) {
-		this.pedidoAgendaId = pedidoAgendaId;
-	}
 
 	public Integer getProdutoId() {
 		return produtoId;
