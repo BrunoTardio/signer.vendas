@@ -67,7 +67,7 @@ public class DBService {
 	
 	
 	
-	public void InstantiateTestDataBase() throws ParseException {
+	public void instantiateTestDatabase() throws ParseException {
 		
 		Cliente c1 = new Cliente(null, "brunotardio@gmail.com", "123");
 		Cliente c2 = new Cliente(null, "tardio@gmail.com", "123");
