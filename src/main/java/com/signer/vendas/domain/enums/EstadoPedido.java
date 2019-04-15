@@ -6,7 +6,8 @@ public enum EstadoPedido {
 
 	EM_ABERTO(1,"Pedido em Aberto"),
 	AGUARDANDO_DOCUMENTOS(2,"Pedido aguardando a documentacao do cliente"),
-	FECHADO(3,"Pedido fechado");
+	FECHADO(3,"Pedido fechado"),
+	CANCELADO(4,"Pedido Cancelado");
 	
 	private int cod;
 	private String descricao;

@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.signer.vendas.domain.Pedido;
+import com.signer.vendas.domain.Produto;
 import com.signer.vendas.domain.Pedido;
 import com.signer.vendas.dto.PedidoNewDTO;
+import com.signer.vendas.dto.ProdutoNewDTO;
 import com.signer.vendas.service.PedidoService;
 
 @RestController
@@ -42,6 +44,17 @@ public class PedidoResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@RequestMapping(value="/{id}",method =RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody PedidoNewDTO objDto, @PathVariable Integer id){
+		Pedido obj = service.fromDTO(objDto);
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	
 	
 	
 	@RequestMapping(method=RequestMethod.GET)

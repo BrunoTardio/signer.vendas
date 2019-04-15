@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-
 import com.signer.vendas.domain.Cliente;
 import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.ClientePJ;
@@ -24,6 +23,7 @@ import com.signer.vendas.domain.Produto;
 import com.signer.vendas.domain.ProdutoCategoria;
 import com.signer.vendas.domain.enums.EstadoPagamento;
 import com.signer.vendas.domain.enums.EstadoPedido;
+import com.signer.vendas.dto.PedidoEstadoDTO;
 import com.signer.vendas.dto.PedidoNewDTO;
 
 import com.signer.vendas.repository.ClientePFRepository;
@@ -66,8 +66,8 @@ public class PedidoService {
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
-		obj.setEstadoPedido(EstadoPedido.EM_ABERTO);
-		obj.setEstadoPedido(EstadoPagamento.LOCAL);
+		//obj.setEstadoPedido(EstadoPedido.EM_ABERTO);
+		//obj.setEstadoPagamento(EstadoPagamento.LOCAL);
 		
 		if (obj.getClientePF() != null) {
 			cpfrepo.save(obj.getClientePF());
@@ -86,6 +86,12 @@ public class PedidoService {
 		return obj;
 	}
 
+	@Transactional
+	public Pedido update(Pedido obj) {
+		Pedido newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
 	
 	
 	
@@ -104,6 +110,7 @@ public class PedidoService {
 	
 	//
 	
+	@Transactional
 	public Pedido fromDTO(PedidoNewDTO objDto) {
 		
 		Cliente cliente = new Cliente(objDto.getClienteId(), null, null);
@@ -119,7 +126,8 @@ public class PedidoService {
 			clientePF.setId(objDto.getClientePFId());
 
 			Pedido pedido = new Pedido(null, objDto.getValor(), clientePF, null, produto.orElse(null),
-					null, null, objDto.getInstante());
+					EstadoPedido.toEnum(objDto.getEstadoPedido()), EstadoPagamento.toEnum(objDto.getEstadoPagamento()),
+					objDto.getInstante());
 
 			return pedido;
 		} else {
@@ -127,14 +135,23 @@ public class PedidoService {
 			clientePJ.setCliente(cliente);
 			clientePJ.setId(objDto.getClientePFId());
 
-			Pedido pedido = new Pedido(null, objDto.getValor(), null, clientePJ,produto.orElse(null),
-					null, null, objDto.getInstante());
+			Pedido pedido = new Pedido(null, objDto.getValor(), null, clientePJ, produto.orElse(null),
+					EstadoPedido.toEnum(objDto.getEstadoPedido()), EstadoPagamento.toEnum(objDto.getEstadoPagamento()),
+					objDto.getInstante());
 
 			return pedido;
 		}
 
 	}
 
+	private void updateData(Pedido newObj, Pedido obj) {
+
+		newObj.setEstadoPedido(obj.getEstadoPedido());
+		newObj.setEstadoPagamento(obj.getEstadoPagamento());
+
+	}
 	
+	
+
 	
 }

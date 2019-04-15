@@ -131,7 +131,7 @@ public class Pedido implements Serializable {
 		return EstadoPagamento.toEnum(estadoPagamento);
 	}
 
-	public void setEstadoPedido(EstadoPagamento estadoPagamento) {
+	public void setEstadoPagamento(EstadoPagamento estadoPagamento) {
 		this.estadoPagamento = estadoPagamento.getCod();
 	}
 	

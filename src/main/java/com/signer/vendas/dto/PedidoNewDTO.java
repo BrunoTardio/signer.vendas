@@ -34,8 +34,8 @@ public class PedidoNewDTO implements Serializable {
 
 		this.id = obj.getId();
 		this.valor = obj.getProduto().getPreco();
-		this.estadoPagamento = obj.getEstadoPagamento().getCod();
-		this.estadoPedido = obj.getEstadoPedido().getCod();
+		this.estadoPagamento = (obj.getEstadoPagamento() != null ) ? obj.getEstadoPagamento().getCod() : null;
+		this.estadoPedido = (obj.getEstadoPedido() != null ) ? obj.getEstadoPedido().getCod() : null;
 		this.instante = obj.getInstante();
 		this.clienteId = (obj.getClientePF() != null) ? obj.getClientePF().getCliente().getId()
 				: obj.getClientePJ().getCliente().getId();
