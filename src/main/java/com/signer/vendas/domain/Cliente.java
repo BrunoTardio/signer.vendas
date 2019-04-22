@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.signer.vendas.domain.enums.Perfil;
 
 
 
@@ -46,12 +49,18 @@ public class Cliente implements Serializable {
 	private Set<String> telefones = new HashSet<>();
 
 
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
+	
+	
 	@ElementCollection
 	@CollectionTable(name="clienteEmail")
 	private Set<String> emails = new HashSet<>();
 
 
 	public Cliente() {
+		addPerfil(Perfil.CLIENTE);
 
 	}
 
@@ -60,6 +69,7 @@ public class Cliente implements Serializable {
 		this.id = id;
 		this.login = login;
 		this.senha = senha;
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public Integer getId() {
@@ -118,6 +128,17 @@ public class Cliente implements Serializable {
 	public void setEmails(Set<String> emails) {
 		this.emails = emails;
 	}
+	
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
+
+	}
+
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	
 	
 	@Override
 	public int hashCode() {

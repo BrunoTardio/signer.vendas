@@ -21,6 +21,7 @@ import com.signer.vendas.domain.Produto;
 import com.signer.vendas.domain.ProdutoCategoria;
 import com.signer.vendas.domain.enums.EstadoPagamento;
 import com.signer.vendas.domain.enums.EstadoPedido;
+import com.signer.vendas.domain.enums.Perfil;
 import com.signer.vendas.repository.ClienteEleitorRepository;
 import com.signer.vendas.repository.ClienteEnderecoRepository;
 import com.signer.vendas.repository.ClientePFRepository;
@@ -77,6 +78,8 @@ public class DBService {
 		Cliente c3 = new Cliente(null, "fernando@gmail.com", "123");
 		Cliente c4 = new Cliente(null, "gustavo@gmail.com", "123");
 		Cliente c5 = new Cliente(null, "bruno@gmail.com", "123");
+		Cliente c6 = new Cliente(null, "bruno@gmail.com", pe.encode("123"));
+		c6.addPerfil(Perfil.ADMIN);
 		
 		Set<String> telefones = new HashSet<>();
 		telefones.add("32991612896");
@@ -87,7 +90,7 @@ public class DBService {
 		emails.add("barbosasilverio89@gmail.com");	
 		c1.setTelefones(telefones);
 		c1.setEmails(emails);
-		crepo.saveAll(Arrays.asList(c1, c2, c3, c4, c5));
+		crepo.saveAll(Arrays.asList(c1, c2, c3, c4, c5,c6));
 
 		ClientePJ cpj1 = new ClientePJ(null, "TardioTEC", "Tardio aplicacoes", "44777799595", "9600600", "mei", c1);
 		ClientePJ cpj2 = new ClientePJ(null, "TardioTEC 02 ", "Tardio websites", "65656005", "9322200", "simples", c1);
