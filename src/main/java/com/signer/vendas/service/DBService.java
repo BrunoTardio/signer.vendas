@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.Cliente;
@@ -32,7 +33,9 @@ import com.signer.vendas.repository.ProdutoRepository;
 
 @Service
 public class DBService {
-
+	@Autowired
+	private BCryptPasswordEncoder pe;
+	
 	@Autowired
 	ProdutoCategoriaRepository pcrepo;
 
@@ -69,7 +72,7 @@ public class DBService {
 	
 	public void instantiateTestDatabase() throws ParseException {
 		
-		Cliente c1 = new Cliente(null, "brunotardio@gmail.com", "123");
+		Cliente c1 = new Cliente(null, "brunotardio@gmail.com", pe.encode("123"));
 		Cliente c2 = new Cliente(null, "tardio@gmail.com", "123");
 		Cliente c3 = new Cliente(null, "fernando@gmail.com", "123");
 		Cliente c4 = new Cliente(null, "gustavo@gmail.com", "123");
