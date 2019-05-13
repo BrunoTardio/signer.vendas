@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.Produto;
@@ -42,11 +43,13 @@ public class ProdutoService {
 
 	
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public Produto insert(Produto obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@Transactional
 	public Produto update(Produto obj) {
 		Produto newObj = find(obj.getId()); 
@@ -54,6 +57,7 @@ public class ProdutoService {
 		return repo.save(newObj);
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public void delete(Integer id) {
 		find(id);
 		try {

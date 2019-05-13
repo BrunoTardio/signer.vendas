@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,14 +59,14 @@ public class ClienteService {
 
 		return obj;
 	}
-	
-	
+
 	public Cliente update(Cliente obj) {
-		Cliente newObj = find(obj.getId()); 
-		updateData(newObj,obj);
+		Cliente newObj = find(obj.getId());
+		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public void delete(Integer id) {
 		find(id);
 		try {
@@ -76,37 +77,23 @@ public class ClienteService {
 		}
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public List<Cliente> findAll() {
 		return repo.findAll();
 	}
-	
-	
-	
-	
+
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public Cliente fromDTO(ClienteDTO objDto) {
 
 		return new Cliente(null, objDto.getEmail(), objDto.getSenha());
 	}
 
-
-	
-	
 	public Cliente fromDTO(ClienteNewDTO objDto) {
 
 		Cliente cli = new Cliente(null, objDto.getLogin(), objDto.getSenha());
@@ -125,7 +112,6 @@ public class ClienteService {
 
 		return cli;
 	}
-	
 	
 	private void updateData(Cliente newObj, Cliente obj) {
 
