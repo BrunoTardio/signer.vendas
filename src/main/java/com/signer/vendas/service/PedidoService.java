@@ -7,7 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -17,13 +17,13 @@ import com.signer.vendas.domain.Cliente;
 import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.ClientePJ;
 import com.signer.vendas.domain.Pedido;
-import com.signer.vendas.domain.Pedido;
+
 
 import com.signer.vendas.domain.Produto;
-import com.signer.vendas.domain.ProdutoCategoria;
+
 import com.signer.vendas.domain.enums.EstadoPagamento;
 import com.signer.vendas.domain.enums.EstadoPedido;
-import com.signer.vendas.dto.PedidoEstadoDTO;
+
 import com.signer.vendas.dto.PedidoNewDTO;
 
 import com.signer.vendas.repository.ClientePFRepository;
@@ -33,7 +33,6 @@ import com.signer.vendas.repository.ClienteRepository;
 import com.signer.vendas.repository.PedidoRepository;
 import com.signer.vendas.repository.ProdutoCategoriaRepository;
 import com.signer.vendas.repository.ProdutoRepository;
-import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
 @Service
@@ -50,6 +49,8 @@ public class PedidoService {
 
 	@Autowired
 	private ProdutoCategoriaRepository  pcrepo;
+	
+	
 	@Autowired
 	private ProdutoRepository  prepo;
 	
@@ -103,7 +104,7 @@ public class PedidoService {
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction ){
 		
 			PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findAll(pageRequest);
+			return repo.findAll(pageRequest);
 	}
 	
 	

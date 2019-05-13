@@ -23,6 +23,8 @@ import com.signer.vendas.dto.ClienteRGNewDTO;
 import com.signer.vendas.domain.ClientePJ;
 import com.signer.vendas.repository.ClientePJRepository;
 import com.signer.vendas.repository.ClienteRepository;
+import com.signer.vendas.security.UserSS;
+import com.signer.vendas.service.exceptions.AuthorizationException;
 import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
@@ -34,6 +36,9 @@ public class ClientePJService {
 	
 	@Autowired
 	private ClienteRepository crepo;
+	
+	@Autowired
+	private ClienteService cservice;
 
 	public ClientePJ find(Integer id) {
 
@@ -75,12 +80,18 @@ public class ClientePJService {
 	}
 	
 	 
-	public Page<ClientePJ> findPage(Integer page, Integer linesPerPage, String orderBy, String direction ){
-		
-			PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findAll(pageRequest);
+	public Page<ClientePJ> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente = cservice.find(user.getId());
+
+		return repo.findByCliente(cliente, pageRequest);
 	}
-	
 	
 	
 	//

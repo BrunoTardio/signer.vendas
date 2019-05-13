@@ -14,10 +14,11 @@ import org.springframework.stereotype.Service;
 
 import com.signer.vendas.domain.Cliente;
 import com.signer.vendas.domain.ClientePF;
-import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.dto.ClientePFNewDTO;
 import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClienteRepository;
+import com.signer.vendas.security.UserSS;
+import com.signer.vendas.service.exceptions.AuthorizationException;
 import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
@@ -29,6 +30,9 @@ public class ClientePFService {
 	
 	@Autowired
 	private ClienteRepository crepo;
+	
+	@Autowired
+	private ClientePFService cpfservice;
 
 	public ClientePF find(Integer id) {
 		Optional<ClientePF> obj = repo.findById(id);
@@ -71,8 +75,14 @@ public class ClientePFService {
 	 
 	public Page<ClientePF> findPage(Integer page, Integer linesPerPage, String orderBy, String direction ){
 		
-			PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findAll(pageRequest);
+		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+		
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		ClientePF clientePF = cpfservice.find(user.getId());
+		return null;
 	}
 	
 	
