@@ -19,6 +19,8 @@ import com.signer.vendas.dto.ClienteRGNewDTO;
 import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClienteRGRepository;
 import com.signer.vendas.repository.ClienteRepository;
+import com.signer.vendas.security.UserSS;
+import com.signer.vendas.service.exceptions.AuthorizationException;
 import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
@@ -33,6 +35,9 @@ public class ClienteRGService {
 	
 	@Autowired
 	ClienteRepository crepo;
+	
+	@Autowired
+	ClientePFService cpfservice;
 	
 	public ClienteRG find(Integer id) {
 		Optional<ClienteRG> obj = repo.findById(id);
@@ -71,13 +76,17 @@ public class ClienteRGService {
 	}
 	
 	 
-	public Page<ClienteRG> findPage(Integer page, Integer linesPerPage, String orderBy, String direction ){
-		
-			PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findAll(pageRequest);
-	}
-	
+	public Page<ClienteRG> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		ClientePF clientepf = cpfservice.find(user.getId());
+		return repo.findByClientepf(clientepf, pageRequest);
+	}
 	
 	//
 	

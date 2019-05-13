@@ -22,6 +22,8 @@ import com.signer.vendas.dto.ProdutoDTO;
 import com.signer.vendas.repository.ClienteEleitorRepository;
 import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClienteRepository;
+import com.signer.vendas.security.UserSS;
+import com.signer.vendas.service.exceptions.AuthorizationException;
 import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
@@ -37,6 +39,9 @@ public class ClienteEleitorService {
 	
 	@Autowired
 	private ClientePFRepository clientepfrepo;
+	
+	@Autowired
+	private ClientePFService cpfservice;
 
 	public ClienteEleitor find(Integer id) throws ObjectNotFoundException  {
 		Optional<ClienteEleitor> obj = repo.findById(id);
@@ -76,15 +81,18 @@ public class ClienteEleitorService {
 	}
 	
 	 
-	public Page<ClienteEleitor> findPage(Integer page, Integer linesPerPage, String orderBy, String direction ){
-		
-			PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findAll(pageRequest);
-	}
-	
+	public Page<ClienteEleitor> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 
-	
-	//
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		ClientePF clientePF = cpfservice.find(user.getId());
+
+		return repo.findByClientePF(clientePF, pageRequest);
+	}
 	
 	
 	public ClienteEleitor fromDTO(ClienteEleitorNewDTO objDto) {

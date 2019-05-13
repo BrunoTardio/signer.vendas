@@ -33,6 +33,8 @@ import com.signer.vendas.repository.ClienteRepository;
 import com.signer.vendas.repository.PedidoRepository;
 import com.signer.vendas.repository.ProdutoCategoriaRepository;
 import com.signer.vendas.repository.ProdutoRepository;
+import com.signer.vendas.security.UserSS;
+import com.signer.vendas.service.exceptions.AuthorizationException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
 @Service
@@ -47,6 +49,12 @@ public class PedidoService {
 	@Autowired
 	private ClientePFRepository cpfrepo;
 
+	@Autowired
+	private ClientePFService cpfservice;
+	
+	@Autowired
+	private ClientePJService cpjservice;
+	
 	@Autowired
 	private ProdutoCategoriaRepository  pcrepo;
 	
@@ -100,14 +108,36 @@ public class PedidoService {
 		return repo.findAll();
 	}
 	
-	 
-	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction ){
-		
-			PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-			return repo.findAll(pageRequest);
+	// SERA NECESSARIO IMPLEMENTAR O CLIENTE NA TABELA DE PEDIDOS
+	public Page<Pedido> findPagePF(Integer page, Integer linesPerPage, String orderBy, String direction) {
+
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		ClientePF clientepf = cpfservice.find(user.getId());
+		clientepf.getCliente().getId();
+
+		return repo.findByClientePF(clientepf, pageRequest);
+
 	}
-	
-	
+
+	public Page<Pedido> findPagePJ(Integer page, Integer linesPerPage, String orderBy, String direction) {
+
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		ClientePJ clientepj = cpjservice.find(user.getId());
+		clientepj.getCliente().getId();
+
+		return repo.findByClientePJ(clientepj, pageRequest);
+
+	}
 	
 	//
 	

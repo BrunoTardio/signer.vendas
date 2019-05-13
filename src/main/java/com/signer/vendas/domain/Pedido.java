@@ -25,6 +25,7 @@ public class Pedido implements Serializable {
 	private double valor;
 	private Integer estadoPedido;
 	private Integer estadoPagamento;
+
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm",locale = "UTC-03")
 	private Date instante;
@@ -62,8 +63,7 @@ public class Pedido implements Serializable {
 		this.produto = produto;
 		this.estadoPedido = (estadoPedido==null) ? null : estadoPedido.getCod();
 		this.estadoPagamento = (estadoPagamento==null) ? null : estadoPagamento.getCod();
-		this.instante = instante;
-		
+		this.instante = instante;	
 	}
 
 	public Integer getId() {
@@ -107,8 +107,7 @@ public class Pedido implements Serializable {
 		this.produto = produto;
 	}
 	
-	
-	
+
 	public Date getInstante() {
 		return instante;
 	}

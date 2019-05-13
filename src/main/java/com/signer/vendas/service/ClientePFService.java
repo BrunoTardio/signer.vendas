@@ -32,7 +32,8 @@ public class ClientePFService {
 	private ClienteRepository crepo;
 	
 	@Autowired
-	private ClientePFService cpfservice;
+	private ClienteService cservice;
+	
 
 	public ClientePF find(Integer id) {
 		Optional<ClientePF> obj = repo.findById(id);
@@ -73,22 +74,21 @@ public class ClientePFService {
 	}
 	
 	 
-	public Page<ClientePF> findPage(Integer page, Integer linesPerPage, String orderBy, String direction ){
-		
+	public Page<ClientePF> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+
 		UserSS user = UserService.authenticated();
-		if(user == null) {
+		if (user == null) {
 			throw new AuthorizationException("Acesso Negado");
 		}
-		
+
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		ClientePF clientePF = cpfservice.find(user.getId());
-		return null;
+
+		Cliente cliente = cservice.find(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
 	}
-	
-	
-	
+
 	//
-	
+
 	public ClientePF fromDTO(ClientePFNewDTO objDto) {
 
 		Cliente cliente = new Cliente(objDto.getClienteId(), null, null);

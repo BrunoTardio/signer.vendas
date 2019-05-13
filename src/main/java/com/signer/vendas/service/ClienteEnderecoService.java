@@ -21,6 +21,8 @@ import com.signer.vendas.repository.ClienteEnderecoRepository;
 import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClientePJRepository;
 import com.signer.vendas.repository.ClienteRepository;
+import com.signer.vendas.security.UserSS;
+import com.signer.vendas.service.exceptions.AuthorizationException;
 import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
@@ -38,6 +40,9 @@ public class ClienteEnderecoService {
 	
 	@Autowired
 	private ClientePFRepository cpfrepo;
+	
+	@Autowired
+	private ClientePFService cpfservice;
 	
 	
 
@@ -87,8 +92,16 @@ public class ClienteEnderecoService {
 
 	public Page<ClienteEndereco> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+		
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findAll(pageRequest);
+		ClientePF clientePF = cpfservice.find(user.getId());
+		
+		
+		return repo.findByClientePF(clientePF, pageRequest);
 	}
 
 	public ClienteEndereco fromDTO(ClienteEnderecoNewDTO objDto) {
