@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +31,9 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String login;
+	
+	@Column(unique=true)
+	private String email;
 	
 	@JsonIgnore
 	private String senha;
@@ -64,10 +67,10 @@ public class Cliente implements Serializable {
 
 	}
 
-	public Cliente(Integer id, String login, String senha) {
+	public Cliente(Integer id, String email, String senha) {
 		super();
 		this.id = id;
-		this.login = login;
+		this.email = email;
 		this.senha = senha;
 		addPerfil(Perfil.CLIENTE);
 	}
@@ -80,12 +83,12 @@ public class Cliente implements Serializable {
 		this.id = id;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {

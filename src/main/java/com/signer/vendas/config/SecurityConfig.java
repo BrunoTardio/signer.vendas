@@ -19,7 +19,10 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.signer.vendas.security.JWTAuthenticationFilter;
+import com.signer.vendas.security.JWTAuthorizationFilter;
 import com.signer.vendas.security.JWTUtil;
+
+
 
 @Configuration
 @EnableWebSecurity
@@ -42,6 +45,11 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 			"/produtos/**",
 			"/produtocategorias/**"	
 	};
+	
+	private static final String[] PUBLIC_MATCHERS_POST = {
+			"/clientes/**"	
+				
+		};
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -55,26 +63,26 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 		.antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil,userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 	}
-
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
-
+	
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-
+	
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-
 		return new BCryptPasswordEncoder();
 	}
-
 }

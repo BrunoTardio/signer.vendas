@@ -13,7 +13,7 @@ public class UserSS implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	private String login;
+	private String email;
 	private String senha;
 	private Collection<? extends GrantedAuthority> authorities;
 
@@ -21,10 +21,10 @@ public class UserSS implements UserDetails {
 
 	}
 
-	public UserSS(Integer id, String login, String senha, Set<Perfil> perfis) {
+	public UserSS(Integer id, String email, String senha, Set<Perfil> perfis) {
 		super();
 		this.id = id;
-		this.login = login;
+		this.email = email;
 		this.senha = senha;
 		this.authorities = perfis.stream()
 				.map(x -> new SimpleGrantedAuthority(x.getDescricao()))
@@ -47,7 +47,7 @@ public class UserSS implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return login;
+		return email;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class UserSS implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return false;
+		return true;
 	}
 
 	@Override

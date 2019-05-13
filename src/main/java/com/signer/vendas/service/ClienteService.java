@@ -101,7 +101,7 @@ public class ClienteService {
 	
 	public Cliente fromDTO(ClienteDTO objDto) {
 
-		return new Cliente(null, objDto.getLogin(), objDto.getSenha());
+		return new Cliente(null, objDto.getEmail(), objDto.getSenha());
 	}
 
 
@@ -130,7 +130,7 @@ public class ClienteService {
 	private void updateData(Cliente newObj, Cliente obj) {
 
 		newObj.setSenha(obj.getSenha());
-		newObj.setLogin(obj.getLogin());
+		newObj.setEmail(obj.getEmail());
 	}
 
 }

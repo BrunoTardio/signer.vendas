@@ -10,6 +10,5 @@ import com.signer.vendas.domain.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
 	@Transactional(readOnly=true)
-	Cliente findByLogin(String login);
-
+	Cliente findByEmail(String email);
 }

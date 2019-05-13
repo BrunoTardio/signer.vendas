@@ -77,7 +77,7 @@ public class DBService {
 		Cliente c2 = new Cliente(null, "tardio@gmail.com", "123");
 		Cliente c3 = new Cliente(null, "fernando@gmail.com", "123");
 		Cliente c4 = new Cliente(null, "gustavo@gmail.com", "123");
-		Cliente c5 = new Cliente(null, "bruno@gmail.com", "123");
+		Cliente c5 = new Cliente(null, "bru@gmail.com", "123");
 		Cliente c6 = new Cliente(null, "bruno@gmail.com", pe.encode("123"));
 		c6.addPerfil(Perfil.ADMIN);
 		
