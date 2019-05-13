@@ -61,16 +61,7 @@ public class ClientePJResource {
 		return ResponseEntity.noContent().build();
 	}
 
-//	@RequestMapping(method=RequestMethod.GET)
-//	public ResponseEntity<List<ClientePJNewDTO>> findAll() {
-//		List<ClientePJ> list = service.findAll();
-//		List<ClientePJNewDTO> listDto = list.stream().map(obj -> new ClientePJNewDTO(obj)).
-//				collect(Collectors.toList());
-//		return ResponseEntity.ok().body(listDto);
-//		
-//	}
-	
-	//sem page
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<ClientePJ>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
