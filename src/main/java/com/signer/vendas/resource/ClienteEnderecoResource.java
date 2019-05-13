@@ -61,25 +61,16 @@ public class ClienteEnderecoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ClienteEnderecoNewDTO>> findAll() {
-		List<ClienteEndereco> list = service.findAll();
-		List<ClienteEnderecoNewDTO> listDto = list.stream().map(obj -> new ClienteEnderecoNewDTO(obj)).
-				collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDto);
-		
-	}
-	
-	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<ClienteEnderecoNewDTO>> findPage(
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Page<ClienteEndereco>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
-			@RequestParam(value = "orderBy", defaultValue ="logradouro") String orderBy,
+			@RequestParam(value = "orderBy", defaultValue = "logradouro") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<ClienteEndereco> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<ClienteEnderecoNewDTO> listDto = list.map(obj -> new ClienteEnderecoNewDTO(obj));
 
-		return ResponseEntity.ok().body(listDto);
+		return ResponseEntity.ok().body(list);
 
 	}
 

@@ -57,32 +57,19 @@ public class ClienteRGResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ClienteRGNewDTO>> findAll() {
-		List<ClienteRG> list = service.findAll();
-		List<ClienteRGNewDTO> listDto = list.stream().map(obj -> new ClienteRGNewDTO(obj)).
-				collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDto);
-	}
-	
-	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<ClienteRGNewDTO>> findPage(
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Page<ClienteRG>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "nomeTitular") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<ClienteRG> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<ClienteRGNewDTO> listDto = list.map(obj -> new ClienteRGNewDTO(obj));
 
-		return ResponseEntity.ok().body(listDto);
+		return ResponseEntity.ok().body(list);
 
 	}
-	// 
-	
-	
-	
-	
+	//
 	
 	
 	

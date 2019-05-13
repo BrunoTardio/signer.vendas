@@ -67,28 +67,17 @@ public class ClienteEleitorResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ClienteEleitorNewDTO>> findAll() {
-		List<ClienteEleitor> list = service.findAll();
-		List<ClienteEleitorNewDTO> listDto = list.stream().map(obj -> new ClienteEleitorNewDTO(obj)).
-				collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDto);
-	}
-	
-	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<ClienteEleitorNewDTO>> findPage(
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Page<ClienteEleitor>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "zona") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<ClienteEleitor> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<ClienteEleitorNewDTO> listDto = list.map(obj -> new ClienteEleitorNewDTO(obj));
 
-		return ResponseEntity.ok().body(listDto);
+		return ResponseEntity.ok().body(list);
 
 	}
-	// 
-	
+	//
 	
 	
 	

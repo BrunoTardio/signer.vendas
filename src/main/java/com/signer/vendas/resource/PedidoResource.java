@@ -65,19 +65,27 @@ public class PedidoResource {
 		return ResponseEntity.ok().body(listDto);
 		
 	}
-	
-	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<PedidoNewDTO>> findPage(
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
+
+	@RequestMapping(value = "/pj", method = RequestMethod.GET)
+	public ResponseEntity<Page<Pedido>> findPagePJ(@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "instante") String orderBy,
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+		Page<Pedido> list = service.findPagePJ(page, linesPerPage, orderBy, direction);
+
+		return ResponseEntity.ok().body(list);
+
+	}
+
+	@RequestMapping(value = "/pf", method = RequestMethod.GET)
+	public ResponseEntity<Page<Pedido>> findPagePF(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "instante") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<Pedido> list = service.findPagePF(page, linesPerPage, orderBy, direction);
-		Page<PedidoNewDTO> listDto = list.map(obj -> new PedidoNewDTO(obj));
 
-		return ResponseEntity.ok().body(listDto);
+		return ResponseEntity.ok().body(list);
 
 	}
-	
-	
+
 }

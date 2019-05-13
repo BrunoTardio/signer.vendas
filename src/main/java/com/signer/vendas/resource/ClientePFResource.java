@@ -57,28 +57,18 @@ public class ClientePFResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ClientePFNewDTO>> findAll() {
-		List<ClientePF> list = service.findAll();
-		List<ClientePFNewDTO> listDto = list.stream().map(obj -> new ClientePFNewDTO(obj)).
-				collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDto);
-		
-	}
+
 	
-	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<ClientePFNewDTO>> findPage(
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Page<ClientePF>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<ClientePF> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<ClientePFNewDTO> listDto = list.map(obj -> new ClientePFNewDTO(obj));
 
-		return ResponseEntity.ok().body(listDto);
+		return ResponseEntity.ok().body(list);
 
 	}
-	
 	
 	
 	
