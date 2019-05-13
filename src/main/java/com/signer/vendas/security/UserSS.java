@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+
 import com.signer.vendas.domain.enums.*;
 
 public class UserSS implements UserDetails {
@@ -70,4 +72,9 @@ public class UserSS implements UserDetails {
 		return true;
 	}
 
+	
+	public boolean hasRole(Perfil perfil) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
+	}
+	
 }

@@ -22,14 +22,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
 import com.signer.vendas.domain.Cliente;
 import com.signer.vendas.domain.ClientePF;
 import com.signer.vendas.domain.Produto;
 import com.signer.vendas.domain.ProdutoCategoria;
+import com.signer.vendas.domain.enums.Perfil;
 import com.signer.vendas.dto.ClienteDTO;
 import com.signer.vendas.dto.ClienteNewDTO;
 import com.signer.vendas.repository.ClientePFRepository;
 import com.signer.vendas.repository.ClienteRepository;
+import com.signer.vendas.security.UserSS;
+import com.signer.vendas.service.exceptions.AuthorizationException;
 import com.signer.vendas.service.exceptions.DataIntegrityException;
 import com.signer.vendas.service.exceptions.ObjectNotFoundException;
 
@@ -42,8 +46,14 @@ public class ClienteService {
 	@Autowired
 	ClientePFRepository cpfrepo;
 	
+	
 	public Cliente find(Integer id) {
+		
 
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto nao encontrado ! ID: " + id + ", Tipo : " + Cliente.class.getName()));
