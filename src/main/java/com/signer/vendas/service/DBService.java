@@ -73,12 +73,12 @@ public class DBService {
 	
 	public void instantiateTestDatabase() throws ParseException {
 		
-		Cliente c1 = new Cliente(null, "brunotardio@gmail.com", pe.encode("123"));
-		Cliente c2 = new Cliente(null, "tardio@gmail.com", "123");
-		Cliente c3 = new Cliente(null, "fernando@gmail.com", "123");
-		Cliente c4 = new Cliente(null, "gustavo@gmail.com", "123");
-		Cliente c5 = new Cliente(null, "bru@gmail.com", "123");
-		Cliente c6 = new Cliente(null, "bruno@gmail.com", pe.encode("123"));
+		Cliente c1 = new Cliente(null, "brunotardio@gmail.com", pe.encode("12345678"));
+		Cliente c2 = new Cliente(null, "tardio@gmail.com", pe.encode("12345678"));
+		Cliente c3 = new Cliente(null, "fernando@gmail.com",pe.encode("12345678"));
+		Cliente c4 = new Cliente(null, "gustavo@gmail.com", pe.encode("12345678"));
+		Cliente c5 = new Cliente(null, "bru@gmail.com", pe.encode("12345678"));
+		Cliente c6 = new Cliente(null, "bruno@gmail.com", pe.encode("12345678"));
 		c6.addPerfil(Perfil.ADMIN);
 		
 		Set<String> telefones = new HashSet<>();
